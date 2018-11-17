@@ -2,39 +2,35 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Create Schema
-const MovieSchema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  synopsis: {
-    type: String,
-    required: true
-  },
-  startdate: {
-    type: Date,
-    required: true
-  },
-  enddate: {
-    type: Date,
-    required: true
-  },
-  length: {
-    type: Number,
-    required: true
-  },
-  rate: {
-    type: String,
-    required: true
-  },
-  genre: {
+const TicketSchema = new Schema({
+  seat: {
     type: String,
     required: true
   },
   cinema: {
     type: Number,
     required: true
-  }
+  },
+  movie: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  paid: {
+    type: Boolean,
+    required: true
+  },
+  showTime: {
+    type: String,
+    required: true
+  },
+  bookingTime: {
+    type: String,
+    required: true
+  },
 });
 
-module.exports = Movie = mongoose.model("movies", MovieSchema);
+module.exports = Ticket = mongoose.model("tickets", TicketSchema);
