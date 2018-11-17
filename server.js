@@ -5,7 +5,7 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 
 const users = require("./routes/api/users");
-const movies = require("./routes/api/movies");
+// const movies = require("./routes/api/movies");
 
 const app = express();
 app.use(cors());
@@ -29,7 +29,7 @@ require("./config/passport")(passport);
 // Use Routes
 app.use("/api/users", users);
 // app.use("/api/profile", profile);
-app.use("/api/movies", movies);
+// app.use("/api/movies", movies);
 
 app.listen(3001, () => {
   console.log("app running 3001");
