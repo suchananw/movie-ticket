@@ -1,20 +1,11 @@
 {
-  "name": "movies-ticket",
+  "name": "client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bcrypt-nodejs": "0.0.3",
-    "cors": "^2.8.5",
-    "express": "^4.16.4",
-    "jsonwebtoken": "^8.4.0",
-    "knex": "^0.15.2",
-    "mongoose": "^5.3.12",
-    "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-scripts": "2.1.1",
-    "validator": "^10.9.0"
+    "react-scripts": "2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
