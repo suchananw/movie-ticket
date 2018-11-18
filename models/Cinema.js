@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const CinemaSchema = new Schema({
+  cinemaNumber: {
+    type: Number,
+    required: true
+  },
   timeTable: {
     type: [String],
     required: true
@@ -12,7 +16,7 @@ const CinemaSchema = new Schema({
     required: true
   },
   seat: {
-    type: Number,
+    type: [String],
     required: false
   }
 });
