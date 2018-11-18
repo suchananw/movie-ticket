@@ -28,7 +28,6 @@ require("./config/passport")(passport);
 
 // Use Routes
 app.use("/api/users", users);
-// app.use("/api/profile", profile);
 app.use("/api/movies", movies);
 
 app.listen(3001, () => {

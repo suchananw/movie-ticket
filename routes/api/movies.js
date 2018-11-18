@@ -38,7 +38,8 @@ router.post("/add", (req, res) => {
         length: req.body.length,
         rate: req.body.rate,
         genre: req.body.genre,
-        cinema: req.body.cinema
+        cinema: req.body.cinema,
+        poster: req.body.poster
       });
 
       newMovie
@@ -49,13 +50,13 @@ router.post("/add", (req, res) => {
   });
 });
 
-// @route   GET api/movies/:name
+// @route   GET api/movies/:id
 // @desc    Return movie detail
 // @access  Private
-router.get("/:name", (req, res) => {
+router.get("/:id", (req, res) => {
   const errors = {};
 
-  Movie.findOne({ name: req.params.name })
+  Movie.findOne({ id: req.params.id })
     .then(movie => {
       if (!movie) {
         errors.nomovie = "Movie not exists";

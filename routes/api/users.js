@@ -42,16 +42,12 @@ router.post("/register", (req, res) => {
         tel: req.body.tel
       });
 
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          newUser
-            .save()
-            .then(user => res.json(user))
-            .catch(err => console.log(err));
-        });
-      });
+      const hash = bcrypt.hashSync(req.body.password);
+      newUser.password = hash;
+      newUser
+        .save()
+        .then(user => res.json(user))
+        .catch(err => console.log(err));
     }
   });
 });
