@@ -1,39 +1,39 @@
 import {
-  GET_CAT,
-  GET_CATS,
-  CLEAR_CURRENT_CAT,
-  CAT_LOADING
+  GET_MOVIES_LIST,
+  GET_MOVIE_DETAIL,
+  CLEAR_CURRENT_MOVIE,
+  MOVIE_LOADING
 } from "../actions/types";
 
 const initialState = {
-  cat: null,
-  cats: null,
+  movieList: null,
+  movie: null,
   loading: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case CAT_LOADING:
+    case MOVIE_LOADING:
       return {
         ...state,
         loading: true
       };
-    case GET_CAT:
+    case GET_MOVIE_DETAIL:
       return {
         ...state,
-        cat: action.payload,
+        movie: action.payload,
         loading: false
       };
-    case GET_CATS:
+    case GET_MOVIES_LIST:
       return {
         ...state,
-        cats: action.payload,
+        movieList: action.payload,
         loading: false
       };
-    case CLEAR_CURRENT_CAT:
+    case CLEAR_CURRENT_MOVIE:
       return {
         ...state,
-        cat: null
+        movie: null
       };
     default:
       return state;

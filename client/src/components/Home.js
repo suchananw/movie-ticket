@@ -2,23 +2,23 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getCats } from "../actions/shopActions";
-import Show from "./Show/Show";
+import { getMovieList } from "../actions/movieActions";
+import Card from "./Card/Card";
 
 class Home extends Component {
   componentDidMount() {
-    this.props.getCats();
+    this.props.getMovieList();
   }
 
   render() {
-    const { cats, loading } = this.props.cats;
+    const { movieList, loading } = this.props.movies;
 
     let content;
 
-    if (cats === null || loading) {
+    if (movieList === null || loading) {
       content = "Loading...";
     } else {
-      content = cats.map(cat => <Show cat={cat} />);
+      content = movieList.map(movie => <Card movie={movie} />);
     }
 
     return (
@@ -30,17 +30,17 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  getCats: PropTypes.func.isRequired,
+  getMovieList: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  cats: PropTypes.object.isRequired
+  movies: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  cats: state.cats
+  movies: state.movies
 });
 
 export default connect(
   mapStateToProps,
-  { getCats }
+  { getMovieList }
 )(withRouter(Home));

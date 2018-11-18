@@ -13,8 +13,7 @@ import Login from "./components/LogIn/Login";
 import Navbar from "./components/Layout/Navbar";
 import Footer from "./components/Layout/Footer";
 import Home from "./components/Home";
-import Search from "./components/Search/Search";
-// import Detail from "./components/Detail";
+import MovieDetail from "./components/MovieDetail";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -42,17 +41,16 @@ class App extends Component {
         <Router>
           <div className="App">
             <Navbar />
-            <Route exact path="/login" component={Login} />
             <Switch>
-              <Route exact path="/home" component={Home} />
+              <Route exact path="/" component={Home} />
             </Switch>
             <Switch>
-              <Route exact path="/search" component={Search} />
+              <Route exact path="/login" component={Login} />
             </Switch>
-            {/*<Switch>
-              <Route exact path="/movies/:id" component={MovieDetail} />
+            <Switch>
+              <Route exact path="/movies/:name" component={MovieDetail} />
             </Switch>
-            */}
+
             <Footer />
           </div>
         </Router>

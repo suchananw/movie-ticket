@@ -1,14 +1,11 @@
+// User Action
 export const GET_ERRORS = "GET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
-export const GET_PROFILE = "GET_PROFILE";
-export const PROFILE_LOADING = "PROFILE_LOADING";
-export const PROFILE_NOT_FOUND = "PROFILE_NOT_FOUND";
-export const CLEAR_CURRENT_PROFILE = "CLEAR_CURRENT_PROFILE";
-export const GET_PROFILES = "GET_PROFILES";
-export const GET_CAT = "GET_CAT";
-export const GET_CATS = "GET_CATS";
-export const CLEAR_CURRENT_CAT = "CLEAR_CURRENT_CAT";
-export const CAT_NOT_FOUND = "CAT_NOT_FOUND";
-export const CAT_LOADING = "CAT_LOADING";
-export const SET_CURRENT_CAT = "SET_CURRENT_CAT";
+// Movie Action
+export const GET_MOVIES_LIST = "GET_MOVIE_LIST";
+export const GET_MOVIE_DETAIL = "GET_MOVIE_DETAIL";
+export const CLEAR_CURRENT_MOVIE = "CLEAR_CURRENT_MOVIE";
+export const MOVIE_NOT_FOUND = "MOVIE_NOT_FOUND";
+export const MOVIE_LOADING = "MOVIE_LOADING";
+export const SET_CURRENT_MOVIE = "SET_CURRENT_MOVIE";
