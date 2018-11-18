@@ -50,13 +50,13 @@ router.post("/add", (req, res) => {
   });
 });
 
-// @route   GET api/movies/:id
+// @route   GET api/movies/detail/:id
 // @desc    Return movie detail
 // @access  Private
-router.get("/:id", (req, res) => {
+router.get("/detail/:id", (req, res) => {
   const errors = {};
 
-  Movie.findOne({ id: req.params.id })
+  Movie.findById(req.params.id)
     .then(movie => {
       if (!movie) {
         errors.nomovie = "Movie not exists";
@@ -75,6 +75,7 @@ router.get("/all", (req, res) => {
 
   Movie.find()
     .then(movies => {
+      // console.log(movies)
       if (!movies) {
         errors.nomovie = "Movies not exists";
         res.status(404).json(errors);

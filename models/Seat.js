@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 // Create Schema
 const SeatSchema = new Schema({
   status: {
-    type: Boolean,
+    type: [Boolean],
     required: true
   }
 });
