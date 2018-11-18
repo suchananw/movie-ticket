@@ -14,7 +14,7 @@ import Navbar from "./components/Layout/Navbar";
 import Footer from "./components/Layout/Footer";
 import Home from "./components/Home";
 import Search from "./components/Search/Search";
-import Detail from "./components/Detail";
+// import Detail from "./components/Detail";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -31,7 +31,7 @@ if (localStorage.jwtToken) {
     // Logout user
     store.dispatch(logoutUser());
     // Redirect to login
-    window.location.href = "/";
+    window.location.href = "/home";
   }
 }
 
@@ -42,16 +42,17 @@ class App extends Component {
         <Router>
           <div className="App">
             <Navbar />
-            <Route exact path="/" component={Login} />
+            <Route exact path="/login" component={Login} />
             <Switch>
-              <PrivateRoute exact path="/home" component={Home} />
+              <Route exact path="/home" component={Home} />
             </Switch>
             <Switch>
-              <PrivateRoute exact path="/search" component={Search} />
+              <Route exact path="/search" component={Search} />
             </Switch>
-            <Switch>
-              <PrivateRoute exact path="/cat/:id" component={Detail} />
+            {/*<Switch>
+              <Route exact path="/movies/:id" component={MovieDetail} />
             </Switch>
+            */}
             <Footer />
           </div>
         </Router>
