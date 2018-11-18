@@ -69,14 +69,18 @@ router.post("/login", (req, res) => {
   // Find user by email
   User.findOne({ email }).then(user => {
     // Check for user
-    if (!user) {
-      errors.email = "User not found";
-      return res.status(404).json(errors);
-    }
+    console.log(user)
+    // if (!user) {
+    //   errors.email = "User not found";
+    //   return res.status(404).json(errors);
+    // }
 
     // Check Password
-    bcrypt.compare(password, user.password).then(isMatch => {
-      if (isMatch) {
+    bcrypt.compare(password, user.password, function(err, result) {
+      if (err) { throw (err); }
+      // console.log(result);
+      if(result){
+        console.log("isMatch")
         // User Matched
         const payload = {
           id: user.id,
@@ -96,11 +100,12 @@ router.post("/login", (req, res) => {
             });
           }
         );
-      } else {
-        errors.password = "Password incorrect";
-        return res.status(400).json(errors);
       }
-    });
+      else {
+        // console.log("password doesn't match any account")
+        res.json({msg:'fail'});
+      }
+      })
   });
 });
 
