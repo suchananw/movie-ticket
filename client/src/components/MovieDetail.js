@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getCurrentCat } from "../actions/shopActions";
+import { getMovieDetail } from "../actions/movieActions";
 
-class Detail extends Component {
+class MovieDetail extends Component {
   componentDidMount() {
-    if (this.props.match.params.id) {
-      this.props.getCurrentCat(this.props.match.params.id);
+    if (this.props.match.params.name) {
+      this.props.getMovieDetail(this.props.match.params.name);
     }
   }
 
@@ -18,9 +18,12 @@ class Detail extends Component {
   // }
 
   render() {
-    const { cat, loading } = this.props.cats;
+    const { movie, loading } = this.props.movies;
+    let genreList = "";
+    const movieGenre = movie.genre.map(genre => (genreList += genre));
+    console.log(genreList);
 
-    if (cat === null || loading) {
+    if (movie === null || loading) {
       return (
         <div className="container">
           <div className="row m-4">Loading...</div>
@@ -31,14 +34,15 @@ class Detail extends Component {
         <div class="container p-3">
           <div class="row">
             <div class="col-md-6 img">
-              <img src={cat.img} alt={cat.name} class="img-rounded" />
+              <img src={movie.poster} alt={movie.name} class="img-rounded" />
             </div>
             <div class="col-md-6 details p-3">
-              <h4 className="text-uppercase">{cat.name}</h4>
+              <h4 className="text-uppercase">{movie.name}</h4>
               <p>
-                Breed : {cat.breed} <br />
-                Gender : {cat.gender} <br />
-                Age : {cat.age}
+                Synopsis : {movie.synopsis} <br />
+                Length : {movie.length} <br />
+                Rate : {movie.rate} <br />
+                Genre : {movie.genre.map}
               </p>
             </div>
           </div>
@@ -48,18 +52,18 @@ class Detail extends Component {
   }
 }
 
-Detail.propTypes = {
-  getCurrentCat: PropTypes.func.isRequired,
+MovieDetail.propTypes = {
+  getMovieDetail: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  cats: PropTypes.object.isRequired
+  movies: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  cats: state.cats
+  movies: state.movies
 });
 
 export default connect(
   mapStateToProps,
-  { getCurrentCat }
-)(withRouter(Detail));
+  { getMovieDetail }
+)(withRouter(MovieDetail));

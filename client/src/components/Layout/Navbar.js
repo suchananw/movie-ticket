@@ -33,7 +33,7 @@ class Navbar extends Component {
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
                 {/* <a className="nav-link" href="/home">Home <span className="sr-only">(current)</span></a> */}
-                <a className="nav-link" href="/home">
+                <a className="nav-link" href="/">
                   Home
                 </a>
               </li>
