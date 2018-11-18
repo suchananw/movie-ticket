@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 // Create Schema
 const TicketSchema = new Schema({
   seat: {
-    type: String,
+    type: [String],
     required: true
   },
   cinema: {

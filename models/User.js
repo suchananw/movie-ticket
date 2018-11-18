@@ -22,6 +22,10 @@ const UserSchema = new Schema({
   birthdate: {
     type: Date,
     required: true
+  },
+  history: {
+    type: [String],
+    required: false
   }
 });
 
