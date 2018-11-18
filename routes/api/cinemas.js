@@ -8,7 +8,9 @@ const keys = require("../../config/keys");
 // Load User model
 const Movie = require("../../models/Cinema");
 
-// @route   GET api/movies/test
+// @route   GET api/cinemas/test
 // @desc    Tests users route
 // @access  Public
 router.get("/test", (req, res) => res.json({ msg: "cinema Works" }));
+
+module.exports = router;
