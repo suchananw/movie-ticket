@@ -48,7 +48,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
             </Switch>
             <Switch>
-              <Route exact path="/movies/:name" component={MovieDetail} />
+              <Route exact path="/movie/:name" component={MovieDetail} />
             </Switch>
 
             <Footer />
