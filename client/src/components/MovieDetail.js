@@ -6,23 +6,14 @@ import { getMovieDetail } from "../actions/movieActions";
 
 class MovieDetail extends Component {
   componentDidMount() {
-    if (this.props.match.params.name) {
-      this.props.getMovieDetail(this.props.match.params.name);
+    if (this.props.location.state.movieID) {
+      this.props.getMovieDetail(this.props.location.state.movieID);
     }
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.cats.cat === null && this.props.cats.loading) {
-  //     this.props.history.push("/home");
-  //   }
-  // }
-
   render() {
     const { movie, loading } = this.props.movies;
-    let genreList = "";
-    const movieGenre = movie.genre.map(genre => (genreList += genre));
-    console.log(genreList);
-
+    console.log("movie " + movie)
     if (movie === null || loading) {
       return (
         <div className="container">
@@ -30,6 +21,14 @@ class MovieDetail extends Component {
         </div>
       );
     } else {
+      let genreList = "";
+      const movieGenre = movie.genre.map((genre,index) => {
+          if (index === movie.genre.length-1){
+            return genreList += genre
+          }
+          genreList += genre + ", "
+        });
+
       return (
         <div class="container p-3">
           <div class="row">
@@ -40,9 +39,9 @@ class MovieDetail extends Component {
               <h4 className="text-uppercase">{movie.name}</h4>
               <p>
                 Synopsis : {movie.synopsis} <br />
-                Length : {movie.length} <br />
+                Length : {movie.length} mins<br />
                 Rate : {movie.rate} <br />
-                Genre : {movie.genre.map}
+                Genre : {genreList}
               </p>
             </div>
           </div>

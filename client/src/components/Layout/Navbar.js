@@ -15,7 +15,7 @@ class Navbar extends Component {
 
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light px-4">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
           <p className="navbar-brand">Young&Rich</p>
           <button
             className="navbar-toggler"

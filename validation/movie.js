@@ -8,10 +8,10 @@ module.exports = function validateMovieInput(data) {
   data.synopsis = !isEmpty(data.synopsis) ? data.synopsis : "";
   // data.startdate = !isEmpty(data.startdate) ? data.startdate : "";
   // data.enddate = !isEmpty(data.enddate) ? data.enddate : "";
-  data.length = !isEmpty(data.length) ? data.length : "";
+  // data.length = !isEmpty(data.length) ? data.length : "";
   data.rate = !isEmpty(data.rate) ? data.rate : "";
   // data.genre = !isEmpty(data.genre) ? data.genre : [];
-  data.cinema = !isEmpty(data.cinema) ? data.cinema : "";
+  // data.cinema = !isEmpty(data.cinema) ? data.cinema : "";
   data.poster = !isEmpty(data.poster) ? data.poster : "";
 
   if (Validator.isEmpty(data.name)) {

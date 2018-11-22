@@ -4,8 +4,9 @@ import { GET_MOVIES_LIST, GET_MOVIE_DETAIL, MOVIE_LOADING } from "./types";
 // Get cat by id
 export const getMovieDetail = id => dispatch => {
   dispatch(setMovieLoading());
+  console.log("action " + id)
   axios
-    .get(`/api/movies/${id}`)
+    .get(`/api/movies/detail/${id}`)
     .then(res =>
       dispatch({
         type: GET_MOVIE_DETAIL,
@@ -20,7 +21,7 @@ export const getMovieDetail = id => dispatch => {
     );
 };
 
-// Get all cats
+// Get all movies
 export const getMovieList = () => dispatch => {
   dispatch(setMovieLoading());
   axios
@@ -39,7 +40,7 @@ export const getMovieList = () => dispatch => {
     );
 };
 
-// Cat loading
+// Movie loading
 export const setMovieLoading = () => {
   return {
     type: MOVIE_LOADING
