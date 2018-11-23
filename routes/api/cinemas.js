@@ -5,7 +5,7 @@ const keys = require("../../config/keys");
 // Load Input Validation
 // const validateMovieInput = require("../../validation/movie");
 
-// Load User model
+// Load cinema model
 const Cinema = require("../../models/Cinema");
 
 // @route   GET api/cinemas/test
@@ -31,12 +31,12 @@ router.get("/all", (req, res) => {
   });
 
 // @route   GET api/cinemas/detail/:id
-// @desc    Return movie detail
+// @desc    Return cinema detail
 // @access  Private
 router.get("/detail/:cinemaNum", (req, res) => {
     const errors = {};
 
-    Movie.findOne({ cinemaNumber: req.body.cinemaNum }).then(cinemas => {
+    Cinema.findOne({ cinemaNumber: req.params.cinemaNum }).then(cinemas => {
         if (!cinemas) {
             errors.nocinema = "Cinemas not exists";
             res.status(404).json(errors);

@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const users = require("./routes/api/users");
 const movies = require("./routes/api/movies");
 const cinemas = require("./routes/api/cinemas");
+const seats = require("./routes/api/seats");
 
 const app = express();
 app.use(cors());
@@ -31,6 +32,7 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 app.use("/api/movies", movies);
 app.use("/api/cinemas",cinemas);
+app.use("/api/seats",seats);
 
 app.listen(3001, () => {
   console.log("app running 3001");
