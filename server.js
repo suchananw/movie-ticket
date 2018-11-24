@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 const users = require("./routes/api/users");
 const movies = require("./routes/api/movies");
 const cinemas = require("./routes/api/cinemas");
+const tickets = require("./routes/api/tickets");
+
 // const seats = require("./routes/api/seats");
 
 const app = express();
@@ -32,6 +34,7 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 app.use("/api/movies", movies);
 app.use("/api/cinemas",cinemas);
+app.use("/api/tickets",tickets);
 // app.use("/api/seats",seats);
 
 app.listen(3001, () => {
