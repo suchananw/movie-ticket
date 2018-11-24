@@ -14,6 +14,9 @@ import Navbar from "./components/Layout/Navbar";
 import Footer from "./components/Layout/Footer";
 import Home from "./components/Home";
 import MovieDetail from "./components/MovieDetail";
+import History from "./components/History/History";
+import Payment from "./components/Payment/Payment";
+import MovieBooking from "./components/MovieBooking";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -50,7 +53,15 @@ class App extends Component {
             <Switch>
               <Route exact path="/movie/:name" component={MovieDetail} />
             </Switch>
-
+            <Switch>
+              <Route exact path="/history" component={History} />
+            </Switch>
+            <Switch>
+              <Route exact path="/payment" component={Payment} />
+            </Switch>
+            <Switch>
+              <Route exact path="/booking/:name" component={MovieBooking} />
+            </Switch>
             <Footer />
           </div>
         </Router>

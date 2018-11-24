@@ -1,0 +1,102 @@
+.history {
+  border-spacing: 1;
+  border-collapse: collapse;
+  border-radius: 6px;
+  overflow: hidden;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  padding: 30px;
+}
+.history * {
+  position: relative;
+}
+.history td ,
+.history th{
+  padding-left: 8px;
+}
+.history thead tr {
+  height: 60px;
+  background: white;
+  font-size: 16px;
+  border-bottom: 1px solid gray;
+}
+.history tbody tr {
+  height: 48px;
+  background: white;
+  border-bottom: 1px solid gray;
+}
+@media screen and (max-width: 48em) {
+  .history {
+    display: block;
+  }
+  .history > *,
+  .history tr,
+  .history td,
+  .history th {
+    display: block;
+    min-width: 200px;
+  }
+  .history thead {
+    display: none;
+  }
+  .history tbody tr {
+    height: auto;
+    padding: 8px 0;
+  }
+  .history tbody tr td {
+    padding-left: 45%;
+    margin-bottom: 12px;
+  }
+  .history tbody tr td:last-child {
+    margin-bottom: 0;
+  }
+  .history tbody tr td:before {
+    position: absolute;
+    font-weight: 700; 
+    width: 40%;
+    left: 10px;
+    top: 0;
+  }
+  /* .history tbody tr td:nth-child(1):before {
+    content: "";
+  } */
+  /* .history tbody tr td:nth-child(2):before {
+    content: "No.";
+  }
+  .history tbody tr td:nth-child(3):before {
+    content: "Movie";
+  }
+  .history tbody tr td:nth-child(4):before {
+    content: "Seat";
+  }
+  .history tbody tr td:nth-child(5):before {
+    content: "Showtime";
+  }
+  .history tbody tr td:nth-child(5):before {
+    content: "Price";
+  } */
+}
+@media screen and (min-width: 71.25em) {
+  .img-box {
+    width: 35%;
+    height: auto;
+    max-width: 500px;
+  }
+}
+
+.SearchBox {
+  margin: auto;
+  max-width: 500px;
+  min-width: 100px;
+}
+
+.search-img {
+  /* min-width: 120px; */
+  max-width: 280px;
+  width: 100%;
+  left: 0px;
+  right: 0px;
+  margin: 4px 0px;
+}
