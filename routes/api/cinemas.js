@@ -15,11 +15,6 @@ const Movie = require("../../models/Movie");
 // @access  Public
 router.get("/test", (req, res) => res.json({ msg: "cinema Works" }));
 
-// @route   GET api/movies/test
-// @desc    Tests users route
-// @access  Public
-router.get("/testmovie", (req, res) => res.json({ msg: "Movies Works" }));
-
 // @route   GET api/cinemas/all
 // @desc    Return all cinema
 // @access  private
@@ -141,7 +136,7 @@ router.get("/:cinemaNum/seat/status/:seatNum", (req, res) => {
 // @route   GET api/cinemas/seat/status/:seatNum/update/:status
 // @desc    update seat status in cinema
 // @access  Private
-router.get("/:cinemaNum/seat/status/update/:status", (req, res) => {
+router.get("/:cinemaNum/seat/:seatNum/status/update/:status", (req, res) => {
     const errors = {};
 
     Cinema.findOne({ cinemaNumber: req.params.cinemaNum })
@@ -152,21 +147,22 @@ router.get("/:cinemaNum/seat/status/update/:status", (req, res) => {
             res.status(404).json(errors);
         } 
         // var seat;
-        // for (var i = 0; i < cinema.seats.length; i++) {
-        //     if(cinema.seats[i].seatNumber ===  req.params.seatNum){
-        //         console.log(cinema.seats[i])
-        //         res.json(cinema.seats[i]);
-        //         // seat = cinema.seats[i]
-        //     }
-        // }
-        var myquery = { cinemaNumber:req.params.cinemaNum };
-        var newvalues = { $set: {timeTable: round} };
-        Cinema.updateOne(myquery, newvalues, function(err, res) {
-            if (err) throw err;
-            console.log("1 document updated");
-        });
-        // console.log(seat)
-        // res.json(seat);
+        for (var i = 0; i < cinema.seats.length; i++) {
+            if(cinema.seats[i].seatNumber ===  req.params.seatNum){
+                console.log(cinema.seats[i])
+                console.log(cinema.seats[i].status[0])
+                cinema.seats[i].status[0] =  (req.params.status === 'true');
+                console.log(cinema.seats[i].status[0])
+            }
+        }
+
+    var myquery = { cinemaNumber:req.params.cinemaNum };
+    var newvalues = { $set: {seats: cinema.seats} };
+    Cinema.updateOne(myquery, newvalues, function(err, res) {
+        if (err) throw err;
+        console.log("1 document updated");
+    });
+    res.json(cinema);
     }).catch(err => res.status(404).json({ cinema: "Cinema not exists" }));
 });
 
