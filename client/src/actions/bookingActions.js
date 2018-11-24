@@ -24,7 +24,6 @@ export const getShowtime = cinemaNumber => dispatch => {
     );
 };
 
-// Get all movies
 export const getSeat = () => dispatch => {
   dispatch(setSeatLoading());
   axios

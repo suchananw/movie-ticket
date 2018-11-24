@@ -5,32 +5,51 @@ import { withRouter } from "react-router-dom";
 import { getShowtime } from "../actions/bookingActions";
 
 import Showtime from "./Booking/Showtime";
+import Seatplan from "./Booking/Seatplan";
 
 class MovieBooking extends Component {
+  constructor() {
+    super();
+    this.state = {
+      time: null
+    };
+  }
+
   componentDidMount() {
     if (this.props.location.state.cinemaID) {
       this.props.getShowtime(this.props.location.state.cinemaID);
     }
   }
 
+  onClickTime = index => {
+    this.setState({
+      time: index
+    });
+  };
+
   render() {
     const { cinema, loading } = this.props.cinema;
-    console.log(cinema);
-    let content;
 
     if (cinema === null || loading) {
-      content = "Loading...";
-    } else {
-    }
-
-    return (
-      <div className="container">
-        <div>
-          <Showtime cinema={cinema} />
+      return (
+        <div className="container">
+          <div className="row m-4">Loading...</div>
         </div>
-        <div className="row m-4">{content}</div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="container">
+          <div>
+            <Showtime cinema={cinema} onClickTime={this.onClickTime} />
+          </div>
+          {this.state.time !== null ? (
+            <div>
+              <Seatplan />
+            </div>
+          ) : null}
+        </div>
+      );
+    }
   }
 }
 

@@ -1,19 +1,29 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import "./Showtime.css";
 
 export default class Showtime extends Component {
+  onClick = index => {
+    this.props.onClickTime(index);
+  };
+
   render() {
     const { cinema } = this.props;
     console.log(this.props);
-    const timetable = cinema.timetable;
-    const timeButton = timetable.map(time => (
-      <input type="button" value={time} />
+    const timetable = cinema.timeTable;
+    const timeButton = timetable.map((time, index) => (
+      <input
+        className="showtime-button p-3 m-2"
+        key={index}
+        type="button"
+        value={time}
+        onClick={() => this.onClick(index)}
+      />
     ));
 
     return (
-      <div className="container">
-        <h2>CINEMA {cinema.cinemaNumber}</h2>
-        {timeButton}
+      <div className="container showtime-box p-4">
+        <h5>CINEMA {cinema.cinemaNumber}</h5>
+        <div className="">{timeButton}</div>
       </div>
     );
   }
