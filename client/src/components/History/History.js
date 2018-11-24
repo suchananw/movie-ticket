@@ -55,7 +55,7 @@ class ProductRow extends Component {
 
       const rows = data.map((data,index) => <ProductRow data={data} index={index} />)
       return (
-        <table>
+        <table className="history">
           <thead>
             <tr>
               <th>No.</th>
