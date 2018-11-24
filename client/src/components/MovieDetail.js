@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { getMovieDetail } from "../actions/movieActions";
 
 class MovieDetail extends Component {
@@ -13,7 +13,7 @@ class MovieDetail extends Component {
 
   render() {
     const { movie, loading } = this.props.movies;
-    console.log("movie " + movie)
+    console.log("movie " + movie);
     if (movie === null || loading) {
       return (
         <div className="container">
@@ -22,12 +22,12 @@ class MovieDetail extends Component {
       );
     } else {
       let genreList = "";
-      const movieGenre = movie.genre.map((genre,index) => {
-          if (index === movie.genre.length-1){
-            return genreList += genre
-          }
-          genreList += genre + ", "
-        });
+      const movieGenre = movie.genre.map((genre, index) => {
+        if (index === movie.genre.length - 1) {
+          return (genreList += genre);
+        }
+        genreList += genre + ", ";
+      });
 
       return (
         <div class="container p-3">
@@ -35,14 +35,52 @@ class MovieDetail extends Component {
             <div class="col-md-6 img">
               <img src={movie.poster} alt={movie.name} class="img-rounded" />
             </div>
-            <div class="col-md-6 details p-3">
-              <h4 className="text-uppercase">{movie.name}</h4>
-              <p>
-                Synopsis : {movie.synopsis} <br />
-                Length : {movie.length} mins<br />
-                Rate : {movie.rate} <br />
-                Genre : {genreList}
-              </p>
+            <div class="col-md-6 details p-3 movie-detail-table rounded">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      <h4 className="text-uppercase">{movie.name}</h4>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-left">
+                  <tr>
+                    <td>
+                      <p className="font-weight-bold text-left">Synopsis : </p>
+                      {movie.synopsis}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p className="font-weight-bold text-left">Length : </p>
+                      {movie.length}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p className="font-weight-bold text-left">Rate : </p>
+                      {movie.rate}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p className="font-weight-bold text-left">Genre : </p>
+                      {genreList}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className="container m-3">
+              <Link
+                to={{
+                  pathname: `/booking/${movie.name}`,
+                  state: { cinemaID: movie.cinemaID }
+                }}
+              >
+                <input type="button" value="Buy Ticket" />
+              </Link>
             </div>
           </div>
         </div>
