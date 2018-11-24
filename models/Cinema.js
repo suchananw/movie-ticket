@@ -9,7 +9,7 @@ const CinemaSchema = new Schema({
   },
   timeTable: {
     type: [String],
-    required: true
+    required: false
   },
   numberofSeat: {
     type: Number,

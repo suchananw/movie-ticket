@@ -30,3 +30,7 @@
     transform: rotate(360deg);
   }
 }
+
+.movie-detail-table {
+  background-color: white;
+}

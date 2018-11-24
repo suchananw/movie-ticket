@@ -16,6 +16,7 @@ import Home from "./components/Home";
 import MovieDetail from "./components/MovieDetail";
 import History from "./components/History/History";
 import Payment from "./components/Payment/Payment";
+import MovieBooking from "./components/MovieBooking";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -57,6 +58,9 @@ class App extends Component {
             </Switch>
             <Switch>
               <Route exact path="/payment" component={Payment} />
+            </Switch>
+            <Switch>
+              <Route exact path="/booking/:name" component={MovieBooking} />
             </Switch>
             <Footer />
           </div>
