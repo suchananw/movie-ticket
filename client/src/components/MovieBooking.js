@@ -45,6 +45,7 @@ class MovieBooking extends Component {
           {this.state.time !== null ? (
             <div>
               <Seatplan />
+              <input type="button" value="Confirm" />
             </div>
           ) : null}
         </div>

@@ -13,6 +13,10 @@
   padding: 0px 250px;
 }
 
+.row-label {
+  width: 20px;
+}
+
 /* .seat-checkbox {
   max-width: 50px;
 } */
@@ -42,7 +46,7 @@
   padding: 5px;
   position: relative;
 }
-.seat:nth-child(4) {
+.seat:nth-child(5) {
   margin-right: 8%;
 }
 .seat input[type="checkbox"] {
