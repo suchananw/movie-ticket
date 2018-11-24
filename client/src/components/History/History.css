@@ -1,6 +1,4 @@
-
-
-table {
+.history {
   border-spacing: 1;
   border-collapse: collapse;
   border-radius: 6px;
@@ -11,74 +9,74 @@ table {
   position: relative;
   padding: 30px;
 }
-table * {
+.history * {
   position: relative;
 }
-table td,
-table th {
+.history td ,
+.history th{
   padding-left: 8px;
 }
-table thead tr {
+.history thead tr {
   height: 60px;
   background: white;
   font-size: 16px;
   border-bottom: 1px solid gray;
 }
-table tbody tr {
+.history tbody tr {
   height: 48px;
   background: white;
   border-bottom: 1px solid gray;
 }
 @media screen and (max-width: 48em) {
-  table {
+  .history {
     display: block;
   }
-  table > *,
-  table tr,
-  table td,
-  table th {
+  .history > *,
+  .history tr,
+  .history td,
+  .history th {
     display: block;
     min-width: 200px;
   }
-  table thead {
+  .history thead {
     display: none;
   }
-  table tbody tr {
+  .history tbody tr {
     height: auto;
     padding: 8px 0;
   }
-  table tbody tr td {
+  .history tbody tr td {
     padding-left: 45%;
     margin-bottom: 12px;
   }
-  table tbody tr td:last-child {
+  .history tbody tr td:last-child {
     margin-bottom: 0;
   }
-  table tbody tr td:before {
+  .history tbody tr td:before {
     position: absolute;
-    font-weight: 700;
+    font-weight: 700; 
     width: 40%;
     left: 10px;
     top: 0;
   }
-  /* table tbody tr td:nth-child(1):before {
+  /* .history tbody tr td:nth-child(1):before {
     content: "";
   } */
-  table tbody tr td:nth-child(2):before {
+  /* .history tbody tr td:nth-child(2):before {
     content: "No.";
   }
-  table tbody tr td:nth-child(3):before {
+  .history tbody tr td:nth-child(3):before {
     content: "Movie";
   }
-  table tbody tr td:nth-child(4):before {
+  .history tbody tr td:nth-child(4):before {
     content: "Seat";
   }
-  table tbody tr td:nth-child(5):before {
+  .history tbody tr td:nth-child(5):before {
     content: "Showtime";
   }
-  table tbody tr td:nth-child(5):before {
+  .history tbody tr td:nth-child(5):before {
     content: "Price";
-  }
+  } */
 }
 @media screen and (min-width: 71.25em) {
   .img-box {

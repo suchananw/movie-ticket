@@ -152,13 +152,19 @@ router.get("/:cinemaNum/seat/status/update/:status", (req, res) => {
             res.status(404).json(errors);
         } 
         // var seat;
-        for (var i = 0; i < cinema.seats.length; i++) {
-            if(cinema.seats[i].seatNumber ===  req.params.seatNum){
-                console.log(cinema.seats[i])
-                res.json(cinema.seats[i]);
-                // seat = cinema.seats[i]
-            }
-        }
+        // for (var i = 0; i < cinema.seats.length; i++) {
+        //     if(cinema.seats[i].seatNumber ===  req.params.seatNum){
+        //         console.log(cinema.seats[i])
+        //         res.json(cinema.seats[i]);
+        //         // seat = cinema.seats[i]
+        //     }
+        // }
+        var myquery = { cinemaNumber:req.params.cinemaNum };
+        var newvalues = { $set: {timeTable: round} };
+        Cinema.updateOne(myquery, newvalues, function(err, res) {
+            if (err) throw err;
+            console.log("1 document updated");
+        });
         // console.log(seat)
         // res.json(seat);
     }).catch(err => res.status(404).json({ cinema: "Cinema not exists" }));
