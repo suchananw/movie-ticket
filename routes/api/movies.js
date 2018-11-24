@@ -50,6 +50,24 @@ router.post("/add", (req, res) => {
   });
 });
 
+// @route   GET api/movies/all
+// @desc    Return all movies
+// @access  Private
+router.get("/all", (req, res) => {
+  const errors = {};
+
+  Movie.find()
+    .then(movies => {
+      // console.log(movies)
+      if (!movies) {
+        errors.nomovie = "Movies not exists";
+        res.status(404).json(errors);
+      }
+      res.json(movies);
+    })
+    .catch(err => res.status(404).json({ movie: "Movie not exists" }));
+});
+
 // @route   GET api/movies/detail/:id
 // @desc    Return movie detail
 // @access  Private
@@ -67,22 +85,20 @@ router.get("/detail/:id", (req, res) => {
     .catch(err => res.status(404).json({ movie: "Movie not exists" }));
 });
 
-// @route   GET api/movies/all
-// @desc    Return all movies
+// @route   GET api/cinemas/findmovie/:cinemaNum
+// @desc    Find movie by cinemaNum
 // @access  Private
-router.get("/all", (req, res) => {
+router.get("/findmovie/:cinemaNum", (req, res) => {
   const errors = {};
 
-  Movie.find()
-    .then(movies => {
-      // console.log(movies)
+  Movie.findOne({ cinema: req.params.cinemaNum }).then(movies => {
       if (!movies) {
-        errors.nomovie = "Movies not exists";
-        res.status(404).json(errors);
-      }
+          errors.nomovie = "movie not exists";
+          res.status(404).json(errors);
+      } 
       res.json(movies);
-    })
-    .catch(err => res.status(404).json({ movie: "Movie not exists" }));
+  })
+  .catch(err => res.status(404).json({ movie: "movie not exists" }));
 });
 
 module.exports = router;
