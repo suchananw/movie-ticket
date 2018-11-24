@@ -15,10 +15,18 @@ const CinemaSchema = new Schema({
     type: Number,
     required: true
   },
-  seat: {
-    type: [String],
-    required: false
-  }
+  seats: [
+    {
+     seatNumber:{
+      type: String,
+      required: true
+     },
+     status: {
+      type: [Boolean],
+      required: true
+     }
+    }
+  ]
 });
 
 module.exports = Cinema = mongoose.model("cinemas", CinemaSchema);

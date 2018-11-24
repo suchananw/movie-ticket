@@ -38,7 +38,7 @@ router.get("/all", (req, res) => {
   });
 
 // @route   GET api/cinemas/detail/:id
-// @desc    Return cinema detail
+// @desc    Return cinema detail find by cinema id
 // @access  Private
 router.get("/detail/:cinemaNum", (req, res) => {
     const errors = {};
@@ -60,42 +60,110 @@ router.get("/detail/:cinemaNum", (req, res) => {
 router.get("/generateRound/:cinemaNum", (req, res) => {
   const errors = {};
   var round = [];
-
-  Movie.findOne({ cinema: req.params.cinemaNum })
+  
+  Movie.find({ cinema: req.params.cinemaNum })
   .then(movies => {
     if (!movies) {
         errors.nomovie = "movie not exists";
-        res.status(404).json(errors);
+        return res.status(404).json(errors);
     } 
-    res.json(movies);
-    console.log(movies.enddate)
-    var openTime= new Date()
-    var endTime = new Date()
-    openTime.setHours(10,00)
-    endTime.setHours(22,00)
-    console.log(openTime.getHours())
-    var currentRound = openTime
-    var thisRow = ""
-    do{
-        // console.log(currentRound.getHours()+":"+currentRound.getMinutes())
-        var roundMinute = currentRound.getMinutes()
-        if (roundMinute<10){
-            roundMinute = "0"+roundMinute
+    if(movies.length>1){
+        var currentDate = new Date()
+        var movieShow
+        for (var i = 0; i < movies.length; i++) {
+            if(currentDate > movies[i].startdate || currentDate === movies[i].startdate){
+                if(currentDate < movies[i].enddate || currentDate === movies[i].enddate){
+                    movieShow = movies[i];
+                    // console.log(movies[i])
+                    break;
+                }
+            }
+            else{
+                errors.movieError = "Current time have no movie showing";
+                return res.status(404).json(errors);
+            }
         }
-        round.push(currentRound.getHours()+":"+roundMinute)
-        currentRound = moment(currentRound).add(Number(movies.length)+30, 'm').toDate();
-    } while(currentRound < endTime);
-    console.log(round)
-    
-    var myquery = { cinemaNumber:req.params.cinemaNum };
-    var newvalues = { $set: {timeTable: round} };
-    Cinema.updateOne(myquery, newvalues, function(err, res) {
-        if (err) throw err;
-        console.log("1 document updated");
-    });
+        // console.log(movieShow)
+        return movieShow;
+    }
+    else{
+        return movie;
+    }
     })
-    .catch(err => res.status(404).json({ movie: "movie not exists" }));
+   .then( movie => {
+        res.json(movie);
+        var openTime= new Date()
+        var endTime = new Date()
+        openTime.setHours(10,00)
+        endTime.setHours(22,00)
+        var currentRound = openTime
+        do{
+            var roundMinute = currentRound.getMinutes()
+            if (roundMinute<10){
+                roundMinute = "0"+roundMinute
+            }
+            round.push(currentRound.getHours()+":"+roundMinute)
+            currentRound = moment(currentRound).add(Number(movie.length)+30, 'm').toDate();
+        } while(currentRound < endTime);
+        console.log(round)
+        
+        var myquery = { cinemaNumber:req.params.cinemaNum };
+        var newvalues = { $set: {timeTable: round} };
+        Cinema.updateOne(myquery, newvalues, function(err, res) {
+            if (err) throw err;
+            console.log("1 document updated");
+        });
+    }).catch(err => res.status(404).json({ movie: "movie not exists" }));
 });
+
+// @route   GET api/cinemas/seat/status/:cinemaNum/:seatNum
+// @desc    Return seat status in cinema
+// @access  Private
+router.get("/:cinemaNum/seat/status/:seatNum", (req, res) => {
+    const errors = {};
+
+    Cinema.findOne({ cinemaNumber: req.params.cinemaNum })
+    .then(cinema => {
+        console.log(cinema)
+        if (!cinema) {
+            errors.nocinema = "Cinemas not exists";
+            res.status(404).json(errors);
+        } 
+        for (var i = 0; i < cinema.seats.length; i++) {
+            if(cinema.seats[i].seatNumber ===  req.params.seatNum){
+                console.log(cinema.seats[i])
+                res.json(cinema.seats[i]);
+            }
+        }
+    }).catch(err => res.status(404).json({ cinema: "Cinema not exists" }));
+});
+
+// @route   GET api/cinemas/seat/status/:seatNum/update/:status
+// @desc    update seat status in cinema
+// @access  Private
+router.get("/:cinemaNum/seat/status/update/:status", (req, res) => {
+    const errors = {};
+
+    Cinema.findOne({ cinemaNumber: req.params.cinemaNum })
+    .then(cinema => {
+        console.log(cinema)
+        if (!cinema) {
+            errors.nocinema = "Cinemas not exists";
+            res.status(404).json(errors);
+        } 
+        // var seat;
+        for (var i = 0; i < cinema.seats.length; i++) {
+            if(cinema.seats[i].seatNumber ===  req.params.seatNum){
+                console.log(cinema.seats[i])
+                res.json(cinema.seats[i]);
+                // seat = cinema.seats[i]
+            }
+        }
+        // console.log(seat)
+        // res.json(seat);
+    }).catch(err => res.status(404).json({ cinema: "Cinema not exists" }));
+});
+
 
     // var timeConvert = function(n){
     //     var minutes = n%60

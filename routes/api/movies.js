@@ -85,20 +85,4 @@ router.get("/detail/:id", (req, res) => {
     .catch(err => res.status(404).json({ movie: "Movie not exists" }));
 });
 
-// @route   GET api/cinemas/findmovie/:cinemaNum
-// @desc    Find movie by cinemaNum
-// @access  Private
-router.get("/findmovie/:cinemaNum", (req, res) => {
-  const errors = {};
-
-  Movie.findOne({ cinema: req.params.cinemaNum }).then(movies => {
-      if (!movies) {
-          errors.nomovie = "movie not exists";
-          res.status(404).json(errors);
-      } 
-      res.json(movies);
-  })
-  .catch(err => res.status(404).json({ movie: "movie not exists" }));
-});
-
 module.exports = router;
