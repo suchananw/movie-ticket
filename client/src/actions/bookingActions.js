@@ -9,7 +9,7 @@ import {
 export const getShowtime = cinemaNumber => dispatch => {
   dispatch(setShowtimeLoading());
   axios
-    .get(`/api/cinema/detail/${cinemaNumber}`)
+    .get(`/api/cinemas/detail/${cinemaNumber}`)
     .then(res =>
       dispatch({
         type: GET_SHOWTIME,

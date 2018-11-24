@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 import "./Card.css";
 
 export default class Card extends Component {
-  // onClickBuy = () => {
-  //   pass
-  // }
-
   render() {
     const { movie } = this.props;
     const movieID = movie._id;
@@ -32,7 +28,7 @@ export default class Card extends Component {
         <Link
           to={{
             pathname: `/booking/${movie.name}`,
-            state: { cinemaID: movie.cinemaID }
+            state: { cinemaID: movie.cinema }
           }}
         >
           <input className="p-2" type="button" value="Buy Ticket" />

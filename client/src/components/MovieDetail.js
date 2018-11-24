@@ -76,7 +76,7 @@ class MovieDetail extends Component {
               <Link
                 to={{
                   pathname: `/booking/${movie.name}`,
-                  state: { cinemaID: movie.cinemaID }
+                  state: { cinemaID: movie.cinema }
                 }}
               >
                 <input type="button" value="Buy Ticket" />

@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getShowtime } from "../actions/bookingActions";
 
+import Showtime from "./Booking/Showtime";
+
 class MovieBooking extends Component {
   componentDidMount() {
     if (this.props.location.state.cinemaID) {
@@ -13,17 +15,19 @@ class MovieBooking extends Component {
 
   render() {
     const { cinema, loading } = this.props.cinema;
-    console.log(this.props.cinema);
+    console.log(cinema);
     let content;
 
-    // if (movieList === null || loading) {
-    //   content = "Loading...";
-    // } else {
-    //   content = movieList.map(movie => );
-    // }
+    if (cinema === null || loading) {
+      content = "Loading...";
+    } else {
+    }
 
     return (
       <div className="container">
+        <div>
+          <Showtime cinema={cinema} />
+        </div>
         <div className="row m-4">{content}</div>
       </div>
     );
