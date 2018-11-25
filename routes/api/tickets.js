@@ -38,19 +38,25 @@ router.post("/add", (req, res) => {
         newTicket
           .save()
           .then(ticket => {
-             console.log(ticket)
+            //  console.log(ticket)
              User.findOne({ email: ticket.user }).then(user => {
-              console.log(user)
+              // console.log(user)
               if (!user) {
                 errors.nouser = "User not exists";
                 return res.status(400).json(errors);
               } else {
                   user.history.push(ticket._id)
-                  res.json(user)
+                  // res.json(user)
               }
-            })
-           }).catch(err => console.log(err));
+              // User.findOneAndUpdate({ email: ticket.user },{history : user.history})
+              User.findOne({ email: ticket.user }, function (err, doc){
+                doc.history = user.history;
+                // doc.visits.$inc();
+                doc.save();
+              });
+            })  
     });
+  });
 
 // @route   GET api/tickets/:ticketid/status
 // @desc    Return ticket status 
@@ -81,12 +87,11 @@ router.get("/:ticketid/updateStatus/:status", (req, res) => {
     // Check Validation
     //if (!isValid) {
     //return res.status(400).json(errors);
-    console.log(req.params.ticketid)
-    Ticket.findByIdAndUpdate(req.params.ticketid, { paid: req.params.status})
-    .then(ticket=>
-      // console.log(ticket)
-      res.json(ticket)
-    )
+    // console.log(req.params.ticketid)
+    Ticket.findById(req.params.ticketid, function (err, doc){
+      doc.paid = (req.params.status === 'true')
+      doc.save();
+    }).then(ticket => res.json(ticket))
     .catch(err => res.status(404).json({ ticket: "Ticket not exists" }));
 });
 
