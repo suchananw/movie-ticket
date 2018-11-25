@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const keys = require("../../config/keys");
+const isEmpty = require("../../validation/is-empty");
 
 // Load Input Validation
 const validateMovieInput = require("../../validation/movie");
@@ -24,28 +25,50 @@ router.post("/add", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  // Find movie by movie
-  Movie.findOne({ name: req.body.name }).then(name => {
-    if (name) {
-      errors.name = "Movie already exists";
-      return res.status(400).json(errors);
-    } else {
-      const newMovie = new Movie({
-        name: req.body.name,
-        synopsis: req.body.synopsis,
-        startdate: req.body.startdate,
-        enddate: req.body.enddate,
-        length: req.body.length,
-        rate: req.body.rate,
-        genre: req.body.genre,
-        cinema: req.body.cinema,
-        poster: req.body.poster
-      });
+  function addmovie(){
+    // Find movie by movie
+    Movie.findOne({ name: req.body.name }).then(name => {
+      if (name) {
+        errors.name = "Movie already exists";
+        return res.status(400).json(errors);
+      } else {
+        const newMovie = new Movie({
+          name: req.body.name,
+          synopsis: req.body.synopsis,
+          startdate: req.body.startdate,
+          enddate: req.body.enddate,
+          length: req.body.length,
+          rate: req.body.rate,
+          genre: req.body.genre,
+          cinema: req.body.cinema,
+          poster: req.body.poster
+        });
 
-      newMovie
-        .save()
-        .then(movie => res.json(movie))
-        .catch(err => console.log(err));
+        newMovie
+          .save()
+          .then(movie => res.json(movie))
+          .catch(err => console.log(err));
+      }
+    });
+    }
+
+  Movie.find({ cinema: req.body.cinema }).then(movies => {
+    // console.log(movies)
+    // console.log(Object.keys(movies).length)
+    // console.log(movies[(Object.keys(movies).length)-1])  
+    if(isEmpty(movies)){
+      addmovie()
+    }
+    else{
+      var startnew = new Date(req.body.startdate)
+      var endold = new Date(movies[(Object.keys(movies).length)-1].enddate)
+      if(startnew < endold){
+        errors.movie = "startdate before enddate of previous movie in this cinema";
+        return res.status(400).json(errors);
+      }
+      else{
+        addmovie()
+      }
     }
   });
 });

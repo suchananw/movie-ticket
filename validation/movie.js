@@ -3,7 +3,7 @@ const isEmpty = require("./is-empty");
 
 module.exports = function validateMovieInput(data) {
   let errors = {};
-  console.log(data);
+  // console.log(data);
   data.name = !isEmpty(data.name) ? data.name : "";
   data.synopsis = !isEmpty(data.synopsis) ? data.synopsis : "";
   // data.startdate = !isEmpty(data.startdate) ? data.startdate : "";
