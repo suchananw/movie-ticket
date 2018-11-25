@@ -15,7 +15,7 @@ const TicketSchema = new Schema({
     type: String,
     required: true
   },
-  price: {
+  amount: {
     type: Number,
     required: true
   },
@@ -29,7 +29,7 @@ const TicketSchema = new Schema({
   },
   bookingTime: {
     type: Date,
-    required: false
+    required: true
   },
   user: {
     type: String,

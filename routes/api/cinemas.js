@@ -62,31 +62,26 @@ router.get("/generateRound/:cinemaNum", (req, res) => {
         errors.nomovie = "movie not exists";
         return res.status(404).json(errors);
     } 
-    if(movies.length>1){
-        var currentDate = new Date()
-        var movieShow
-        for (var i = 0; i < movies.length; i++) {
-            if(currentDate > movies[i].startdate || currentDate === movies[i].startdate){
-                if(currentDate < movies[i].enddate || currentDate === movies[i].enddate){
-                    movieShow = movies[i];
-                    // console.log(movies[i])
-                    break;
-                }
-            }
-            else{
-                errors.movieError = "Current time have no movie showing";
-                return res.status(404).json(errors);
+    var currentDate = new Date()
+    var movieShow
+    for (var i = 0; i < movies.length; i++) {
+        if(currentDate > movies[i].startdate || currentDate === movies[i].startdate){
+            if(currentDate < movies[i].enddate || currentDate === movies[i].enddate){
+                movieShow = movies[i];
+                // console.log(movies[i])
+                break;
             }
         }
-        // console.log(movieShow)
-        return movieShow;
+        else{
+            errors.movieError = "Current time have no movie showing";
+            return res.status(404).json(errors);
+        }
     }
-    else{
-        return movie;
-    }
+    console.log(movieShow)
+    return movieShow;
     })
    .then( movie => {
-        // res.json(movie);
+        console.log(movie)
         var openTime= new Date()
         var endTime = new Date()
         openTime.setHours(10,00)
@@ -100,8 +95,8 @@ router.get("/generateRound/:cinemaNum", (req, res) => {
             round.push(currentRound.getHours()+":"+roundMinute)
             currentRound = moment(currentRound).add(Number(movie.length)+30, 'm').toDate();
         } while(currentRound < endTime);
+
         console.log(round)
-        
         var myquery = { cinemaNumber:req.params.cinemaNum };
         var newvalues = { $set: {timeTable: round} };
         Cinema.updateOne(myquery, newvalues, function(err, res) {
@@ -112,7 +107,6 @@ router.get("/generateRound/:cinemaNum", (req, res) => {
         .then(cinema =>{
             return res.json(cinema)
         })
-       
     }).catch(err => res.status(404).json({ movie: "movie not exists" }));
 });
 
