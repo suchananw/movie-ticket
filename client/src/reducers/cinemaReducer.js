@@ -2,8 +2,7 @@ import {
   GET_SHOWTIME,
   SHOWTIME_LOADING,
   SEAT_LOADING,
-  CLEAR_CURRENT_ROUND,
-  CLEAR_CURRENT_SEAT
+  CLEAR_CURRENT_ROUND
 } from "../actions/types";
 
 const initialState = {
@@ -30,11 +29,6 @@ export default function(state = initialState, action) {
         loading: false
       };
     case CLEAR_CURRENT_ROUND:
-      return {
-        ...state,
-        movie: null
-      };
-    case CLEAR_CURRENT_SEAT:
       return {
         ...state,
         movie: null

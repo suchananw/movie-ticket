@@ -2,14 +2,18 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
+import { createTicket } from "../../actions/bookingActions";
 import "./BookingConfirm.css";
 
 class BookingConfirm extends Component {
   constructor() {
     super();
     this.state = {
+      movie: null,
+      cinema: null,
       showtime: null,
-      seats: []
+      seats: [],
+      price: null
     };
   }
 
@@ -17,11 +21,32 @@ class BookingConfirm extends Component {
     if (this.props.location.state.timeIndex) {
       const timeIndex = this.props.location.state.timeIndex;
       const seats = this.getSelectedSeats(this.props.location.state);
+      const price = this.calculatePrice(this.props.cinema.cinema.price, seats);
       this.setState({
+        movie: this.props.movies.movie,
+        cinema: "" + this.props.cinema.cinema.cinemaNumber,
         showtime: this.props.cinema.cinema.timeTable[timeIndex],
-        seats: seats
+        seats: seats,
+        price: "" + price
       });
     }
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+
+    const ticketDetail = {
+      movie: this.state.movie.name,
+      seat: this.state.seats,
+      cinema: this.state.cinema,
+      showTime: this.state.showtime,
+      amount: this.state.price,
+      paid: "false",
+      bookingTime: new Date(),
+      user: "test2@mail.com"
+    };
+
+    this.props.createTicket(ticketDetail, this.props.history);
   };
 
   getSelectedSeats = state => {
@@ -34,19 +59,15 @@ class BookingConfirm extends Component {
     return selectedSeats;
   };
 
+  calculatePrice = (moviePrice, seats) => {
+    const price = moviePrice * seats.length;
+    return price;
+  };
+
   render() {
     const { movies, cinema } = this.props;
     const selectedMovie = movies.movie;
     const selectedCinema = cinema.cinema;
-    const data = {
-      movie: "ROBIN HOOD",
-      cinema: "2",
-      seat: ["1"],
-      showtime: "10:20",
-      price: "1500",
-      poster:
-        "https://cdn.traileraddict.com/content/lionsgate/robin-hood-2018-6.jpg"
-    };
     if (cinema === null) {
       return (
         <div className="container">
@@ -54,8 +75,6 @@ class BookingConfirm extends Component {
         </div>
       );
     } else {
-      console.log("movie ", selectedMovie);
-      console.log("cinema ", selectedCinema);
       let seatList = "";
       this.state.seats.map((seat, index) => {
         if (index === this.state.seats.length - 1) {
@@ -66,6 +85,9 @@ class BookingConfirm extends Component {
 
       return (
         <div class="container">
+          <div className="row p-4 text-uppercase">
+            <h5>Confirm Booking Movie</h5>
+          </div>
           <div class="row">
             <div class="col-md-6 img">
               <img
@@ -86,12 +108,6 @@ class BookingConfirm extends Component {
                 <tbody className="text-left">
                   <tr>
                     <td>
-                      <p className="font-weight-bold text-left">Seat : </p>
-                      {seatList}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
                       <p className="font-weight-bold text-left">Cinema : </p>
                       {selectedCinema.cinemaNumber}
                     </td>
@@ -104,16 +120,24 @@ class BookingConfirm extends Component {
                   </tr>
                   <tr>
                     <td>
+                      <p className="font-weight-bold text-left">Seat : </p>
+                      {seatList}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
                       <p className="font-weight-bold text-left">Price : </p>
-                      {"this is price"}
+                      {this.state.price}
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div>
+            <div className="container">
               <button class="btn btn-danger m-3">Cancel</button>
-              <button class="btn btn-success m-3">Confrim</button>
+              <button class="btn btn-success m-3" onClick={this.onSubmit}>
+                Confrim
+              </button>
             </div>
           </div>
         </div>
@@ -134,4 +158,7 @@ const mapStateToProps = state => ({
   cinema: state.cinema
 });
 
-export default connect(mapStateToProps)(withRouter(BookingConfirm));
+export default connect(
+  mapStateToProps,
+  { createTicket }
+)(withRouter(BookingConfirm));
