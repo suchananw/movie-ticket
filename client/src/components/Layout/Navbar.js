@@ -45,7 +45,7 @@ class Navbar extends Component {
             </ul>
             <ul className="nav navbar-nav navbar-right">
               {isAuthenticated ? (
-                <div className="nav right">
+                <ul class="nav navbar-nav navbar-right">
                 <li><a href="/history" className="nav-link"> History</a></li>
                 <a
                   href=""
@@ -54,7 +54,7 @@ class Navbar extends Component {
                 >
                   Logout
                 </a>
-                </div>
+                </ul>
               ) : (
                 <Link className="nav-link" to="/login">
                   Login/Register
