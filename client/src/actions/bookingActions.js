@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_SHOWTIME, SHOWTIME_LOADING, SEAT_LOADING } from "./types";
+import { GET_SHOWTIME, SHOWTIME_LOADING } from "./types";
 
 export const getShowtime = cinemaNumber => dispatch => {
   dispatch(setShowtimeLoading());
@@ -23,11 +23,5 @@ export const getShowtime = cinemaNumber => dispatch => {
 export const setShowtimeLoading = () => {
   return {
     type: SHOWTIME_LOADING
-  };
-};
-// Seat loading
-export const setSeatLoading = () => {
-  return {
-    type: SEAT_LOADING
   };
 };
