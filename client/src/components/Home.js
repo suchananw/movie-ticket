@@ -18,12 +18,26 @@ class Home extends Component {
     if (movieList === null || loading) {
       content = "Loading...";
     } else {
-      content = movieList.map(movie => <Card movie={movie} />);
+      content["showing"] = movieList.showing.map(movie => (
+        <Card movie={movie} />
+      ));
+      content["coming"] = movieList.comingsoon.map(movie => (
+        <Card movie={movie} />
+      ));
     }
 
     return (
       <div className="container">
-        <div className="row m-4">{content}</div>
+        <div className="row m-4">
+          <div className="text-uppercase">
+            <h5>now showing</h5>
+          </div>
+          {content.showing}
+        </div>
+        <div className="text-uppercase">
+          <h5>Coming Soon</h5>
+        </div>
+        <div className="row m-4">{content.coming}</div>
       </div>
     );
   }
