@@ -56,30 +56,35 @@ router.post("/add", (req, res) => {
 router.get("/all", (req, res) => {
   const errors = {};
   var movieCategories = {
-    "showing" : [],
-    "comingsoon" : [],
-    "ending" : []
-  }
-    var currentDate = new Date()
-    Movie.find().then(movies => {
-      console.log(movies)
+    showing: [],
+    comingsoon: [],
+    ending: []
+  };
+  var currentDate = new Date();
+  Movie.find()
+    .then(movies => {
+      // console.log(movies)
       if (!movies) {
         errors.nomovie = "Movies not exists";
         res.status(404).json(errors);
       }
       for (var i = 0; i < movies.length; i++) {
-        if(currentDate > movies[i].startdate || currentDate === movies[i].startdate){
-            if(currentDate < movies[i].enddate || currentDate === movies[i].enddate){
-              movieCategories.showing.push(movies[i])
-            }
-            else{
-              movieCategories.ending.push(movies[i])
-            }
+        if (
+          currentDate > movies[i].startdate ||
+          currentDate === movies[i].startdate
+        ) {
+          if (
+            currentDate < movies[i].enddate ||
+            currentDate === movies[i].enddate
+          ) {
+            movieCategories.showing.push(movies[i]);
+          } else {
+            movieCategories.ending.push(movies[i]);
           }
-        else{
-            movieCategories.comingsoon.push(movies[i])
+        } else {
+          movieCategories.comingsoon.push(movies[i]);
         }
-    }
+      }
       return res.json(movieCategories);
     })
     .catch(err => res.status(404).json({ movie: "Movie not exists" }));

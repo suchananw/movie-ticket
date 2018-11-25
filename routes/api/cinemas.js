@@ -62,31 +62,26 @@ router.get("/generateRound/:cinemaNum", (req, res) => {
         errors.nomovie = "movie not exists";
         return res.status(404).json(errors);
     } 
-    if(movies.length>1){
-        var currentDate = new Date()
-        var movieShow
-        for (var i = 0; i < movies.length; i++) {
-            if(currentDate > movies[i].startdate || currentDate === movies[i].startdate){
-                if(currentDate < movies[i].enddate || currentDate === movies[i].enddate){
-                    movieShow = movies[i];
-                    // console.log(movies[i])
-                    break;
-                }
-            }
-            else{
-                errors.movieError = "Current time have no movie showing";
-                return res.status(404).json(errors);
+    var currentDate = new Date()
+    var movieShow
+    for (var i = 0; i < movies.length; i++) {
+        if(currentDate > movies[i].startdate || currentDate === movies[i].startdate){
+            if(currentDate < movies[i].enddate || currentDate === movies[i].enddate){
+                movieShow = movies[i];
+                // console.log(movies[i])
+                break;
             }
         }
-        // console.log(movieShow)
-        return movieShow;
+        else{
+            errors.movieError = "Current time have no movie showing";
+            return res.status(404).json(errors);
+        }
     }
-    else{
-        return movie;
-    }
+    console.log(movieShow)
+    return movieShow;
     })
    .then( movie => {
-        // res.json(movie);
+        console.log(movie)
         var openTime= new Date()
         var endTime = new Date()
         openTime.setHours(10,00)
@@ -100,8 +95,8 @@ router.get("/generateRound/:cinemaNum", (req, res) => {
             round.push(currentRound.getHours()+":"+roundMinute)
             currentRound = moment(currentRound).add(Number(movie.length)+30, 'm').toDate();
         } while(currentRound < endTime);
+
         console.log(round)
-        
         var myquery = { cinemaNumber:req.params.cinemaNum };
         var newvalues = { $set: {timeTable: round} };
         Cinema.updateOne(myquery, newvalues, function(err, res) {
@@ -112,7 +107,6 @@ router.get("/generateRound/:cinemaNum", (req, res) => {
         .then(cinema =>{
             return res.json(cinema)
         })
-       
     }).catch(err => res.status(404).json({ movie: "movie not exists" }));
 });
 
@@ -138,26 +132,26 @@ router.get("/:cinemaNum/seatStatus/:seatNum", (req, res) => {
     }).catch(err => res.status(404).json({ cinema: "Cinema not exists" }));
 });
 
-// @route   GET api/:cinemaNum/seat/:seatNum/updateStatus/:status
+// @route   POST api/updatestatusSeat
 // @desc    update seat status in cinema
 // @access  Private
-router.get("/:cinemaNum/seat/:seatNum/updateStatus/:status", (req, res) => {
+router.post("/updatestatusSeat", (req, res) => {
     const errors = {};
 
-    Cinema.findOne({ cinemaNumber: req.params.cinemaNum })
+    Cinema.findOne({ cinemaNumber: req.body.cinemaNum })
     .then(cinema => {
-        console.log(cinema)
+        // console.log(cinema)
         if (!cinema) {
             errors.nocinema = "Cinemas not exists";
             res.status(404).json(errors);
         } 
         // var seat;
         for (var i = 0; i < cinema.seats.length; i++) {
-            if(cinema.seats[i].seatNumber ===  req.params.seatNum){
-                console.log(cinema.seats[i])
-                console.log(cinema.seats[i].status[0])
-                cinema.seats[i].status[0] =  (req.params.status === 'true');
-                console.log(cinema.seats[i].status[0])
+            if(cinema.seats[i].seatNumber ===  req.body.seatNum){
+                // console.log(cinema.seats[i])
+                // console.log(cinema.seats[i].status[0])
+                cinema.seats[i].status[0] =  (req.body.status === 'true');
+                // console.log(cinema.seats[i].status[0])
             }
         }
 

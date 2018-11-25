@@ -25,8 +25,8 @@ module.exports = function validateTicketInput(data) {
     errors.movie = "movie field is required";
   }
 
-  if (Validator.isEmpty(data.price)) {
-    errors.price = "price field is required";
+  if (Validator.isEmpty(data.amount)) {
+    errors.amount = "amount field is required";
   }
 
   // if (!Validator.isEmpty(data.paid)) {
