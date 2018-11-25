@@ -35,6 +35,13 @@ class Payment extends Component {
                     </th>
                   </tr>
                 </thead>
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      <button type="button" class="btn btn-info">Make Payment</button>
+                    </th>
+                  </tr>
+                </thead>
                 </table>
               </div>
             </div>
