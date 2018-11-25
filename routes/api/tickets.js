@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const keys = require("../../config/keys");
+const mongoose = require('mongoose');
 
 // Load Input Validation
 const validateTicketInput = require("../../validation/ticket");
@@ -97,28 +98,37 @@ router.get("/:ticketid/updateStatus/:status", (req, res) => {
     .catch(err => res.status(404).json({ ticket: "Ticket not exists" }));
 });
 
-// // @route   GET api/tickets/validatePayment/:ticketid
-// // @desc    validate payment by bookingTime specific ticketid
+// // @route   POST api/tickets/detail
+// // @desc    return TicketList
 // // @access  Private
-// router.get("/", (req, res) => {
-//   // const { errors, isValid } = validateMovieInput(req.body);
-//   var currentDate = new Date()
-//   // Check Validation
-//   //if (!isValid) {
-//   //return res.status(400).json(errors);
-//   Ticket.findById(req.params.ticketid).then( ticket => {
-//         if (!ticket) {
-//           errors.noticket = "ticket not exists";
-//           res.status(404).json(errors);
-//         }
-//         // console.log(currentDate)
-//         // console.log(ticket.bookingTime)
-//         // console.log(ticket.bookingTime.getMinutes())
-//         // verifyTime = moment(currentDate).add(Number(30), 'm').toDate();
-//         // if(currentDate>verifyTime)
-//         res.json(ticket);
-//       })
-//     .catch(err => res.status(404).json({ ticket: "Ticket not exists" }));
-// });
+router.post("/detail", (req, res) => {
+  // const { errors, isValid } = validateMovieInput(req.body);
+  const ticketlist = []
+  // Check Validation
+  //if (!isValid) {
+  //return res.status(400).json(errors);
+  // findticket = (id) => {
+  //   Ticket.findById(id).then( ticket => {
+  //     // console.log(ticket)
+  //     if (!ticket) {
+  //       errors.noticket = "ticket not exists";
+  //       res.status(404).json(errors);
+  //     }
+  //     return ticket;
+  //   })
+  // }
+
+  for (var i = 0; i < req.body.ticketid.length; i++) {
+      // var tmpticket = findticket(req.body.ticketid[i])
+      // console.log(tmpticket)
+      ticketlist.push(new mongoose.Types.ObjectId(req.body.ticketid[i]));
+  }
+  // console.log(ticketlist)
+  // return res.json(ticketlist)
+  Ticket.find({'_id': { $in: ticketlist}}, function(err, docs){
+    //  console.log(docs);
+     return res.json(docs)
+  });
+});
 
 module.exports = router;
