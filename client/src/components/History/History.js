@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { getUserDetail } from "../../actions/authActions";
+import { getTicketDetail } from "../../actions/userActions";
 import "./History.css";
 
 class ProductRow extends Component {
@@ -88,7 +88,7 @@ class ProductTable extends Component {
 
 class History extends Component {
   componentDidMount = () => {
-    this.props.getUserDetail(this.props.auth.user.id);
+    // this.props.getTicketDetail(this.props.user.userDetail.history);
   };
 
   render() {
@@ -98,15 +98,17 @@ class History extends Component {
 }
 
 History.propTypes = {
-  getUserDetail: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  getTicketDetail: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  user: state.user
 });
 
 export default connect(
   mapStateToProps,
-  { getUserDetail }
+  { getTicketDetail }
 )(withRouter(History));

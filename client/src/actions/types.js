@@ -3,6 +3,9 @@ export const GET_USER_DETAIL = "GET_USER_DETAIL";
 export const GET_ERRORS = "GET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const GET_TICKET_DETAIL = "GET_TICKET_DETAIL";
+export const USER_LOADING = "USER_LOADING";
+export const TICKET_LOADING = "TICKET_LOADING";
 // Movie Action
 export const GET_MOVIES_LIST = "GET_MOVIE_LIST";
 export const GET_MOVIE_DETAIL = "GET_MOVIE_DETAIL";
