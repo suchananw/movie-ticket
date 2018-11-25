@@ -125,22 +125,20 @@ router.get(
   }
 );
 
-// @route   GET api/users/all
-// @desc    Get all users
+// @route   GET api/users/detail
+// @desc    Return detail user specific id
 // @access  Public
-// router.get("/all", (req, res) => {
-//   const errors = {};
-//   db.select("*")
-//     .from("users")
-//     .then(users => {
-//       if (users.length) {
-//         res.json(users);
-//       } else {
-//         errors.email = "There are no user";
-//         return res.status(404).json(errors);
-//       }
-//     })
-//     .catch(err => res.status(400).json(err));
-// });
+router.get("/detail/:userid", (req, res) => {
+  const errors = {};
+  User.findById(req.params.userid)
+  .then(user => {
+    if (!user) {
+      errors.nouser = "User not exists";
+      res.status(404).json(errors);
+    }
+    res.json(user);
+  })
+  .catch(err => res.status(404).json({ User: "User not exists" }));
+});
 
 module.exports = router;
