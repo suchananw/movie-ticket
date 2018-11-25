@@ -37,14 +37,16 @@ class Navbar extends Component {
                   Home
                 </a>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className="nav-link" to="/search">
                   Search
                 </Link>
-              </li>
+              </li> */}
             </ul>
-            <div className="nav navbar-nav navbar-right0">
+            <ul className="nav navbar-nav navbar-right">
               {isAuthenticated ? (
+                <div className="nav right">
+                <li><a href="/history" className="nav-link"> History</a></li>
                 <a
                   href=""
                   onClick={this.onLogoutClick.bind(this)}
@@ -52,10 +54,13 @@ class Navbar extends Component {
                 >
                   Logout
                 </a>
+                </div>
               ) : (
-                <div />
+                <Link className="nav-link" to="/login">
+                  Login/Register
+                </Link>
               )}
-            </div>
+            </ul>
           </div>
         </nav>
       </div>
