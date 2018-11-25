@@ -32,7 +32,7 @@ router.get("/all", (req, res) => {
       .catch(err => res.status(404).json({ cinema: "Cinema not exists" }));
   });
 
-// @route   GET api/cinemas/detail/:id
+// @route   GET api/cinemas/detail/:cinemaNum
 // @desc    Return cinema detail find by cinema id
 // @access  Private
 router.get("/detail/:cinemaNum", (req, res) => {
@@ -86,7 +86,7 @@ router.get("/generateRound/:cinemaNum", (req, res) => {
     }
     })
    .then( movie => {
-        res.json(movie);
+        // res.json(movie);
         var openTime= new Date()
         var endTime = new Date()
         openTime.setHours(10,00)
@@ -107,14 +107,19 @@ router.get("/generateRound/:cinemaNum", (req, res) => {
         Cinema.updateOne(myquery, newvalues, function(err, res) {
             if (err) throw err;
             console.log("1 document updated");
-        });
+        })
+        Cinema.findOne({ cinemaNumber: req.params.cinemaNum })
+        .then(cinema =>{
+            return res.json(cinema)
+        })
+       
     }).catch(err => res.status(404).json({ movie: "movie not exists" }));
 });
 
-// @route   GET api/cinemas/seat/status/:cinemaNum/:seatNum
+// @route   GET api/cinemas/:cinemaNum/seatStatus/:seatNum
 // @desc    Return seat status in cinema
 // @access  Private
-router.get("/:cinemaNum/seat/status/:seatNum", (req, res) => {
+router.get("/:cinemaNum/seatStatus/:seatNum", (req, res) => {
     const errors = {};
 
     Cinema.findOne({ cinemaNumber: req.params.cinemaNum })
@@ -133,10 +138,10 @@ router.get("/:cinemaNum/seat/status/:seatNum", (req, res) => {
     }).catch(err => res.status(404).json({ cinema: "Cinema not exists" }));
 });
 
-// @route   GET api/cinemas/seat/status/:seatNum/update/:status
+// @route   GET api/:cinemaNum/seat/:seatNum/updateStatus/:status
 // @desc    update seat status in cinema
 // @access  Private
-router.get("/:cinemaNum/seat/:seatNum/status/update/:status", (req, res) => {
+router.get("/:cinemaNum/seat/:seatNum/updateStatus/:status", (req, res) => {
     const errors = {};
 
     Cinema.findOne({ cinemaNumber: req.params.cinemaNum })
@@ -165,27 +170,5 @@ router.get("/:cinemaNum/seat/:seatNum/status/update/:status", (req, res) => {
     res.json(cinema);
     }).catch(err => res.status(404).json({ cinema: "Cinema not exists" }));
 });
-
-
-    // var timeConvert = function(n){
-    //     var minutes = n%60
-    //     var hours = (n - minutes) / 60
-    //     return hours + ":" + minutes
-    // }
-    // if (moviestart < movieend) {
-    //     console.log('The first date is before the second.')
-    //     console.log('Today : '+currentDate)
-    //     if(currentDate > moviestart || currentDate === moviestart){
-    //         if(currentDate < movieend || currentDate === movieend){
-    //         }
-    //     }
-    //     else{
-    //         console.log('Coming soon')
-    //     }
-    //   } else if (movieend === movieend) {
-    //     console.log('The dates are the same!')
-    //   } else {
-    //     console.log('The first date is after the second.')
-    //   }
 
 module.exports = router;

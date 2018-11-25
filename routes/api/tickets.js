@@ -19,7 +19,7 @@ router.get("/test", (req, res) => res.json({ msg: "ticket Works" }));
 // @access  Public
 router.post("/add", (req, res) => {
     const { errors, isValid } = validateTicketInput(req.body);
-  
+    var currentDate = new Date()
     // // Check Validation
     if (!isValid) {
       return res.status(400).json(errors);
@@ -31,7 +31,7 @@ router.post("/add", (req, res) => {
           showTime: req.body.showTime,
           price: req.body.price,
           paid: req.body.paid,
-          bookingTime: req.body.bookingTime,
+          bookingTime: currentDate,
           user: req.body.user
         });
   
@@ -89,5 +89,29 @@ router.get("/:ticketid/updateStatus/:status", (req, res) => {
     )
     .catch(err => res.status(404).json({ ticket: "Ticket not exists" }));
 });
+
+// // @route   GET api/tickets/validatePayment/:ticketid
+// // @desc    validate payment by bookingTime specific ticketid
+// // @access  Private
+// router.get("/", (req, res) => {
+//   // const { errors, isValid } = validateMovieInput(req.body);
+//   var currentDate = new Date()
+//   // Check Validation
+//   //if (!isValid) {
+//   //return res.status(400).json(errors);
+//   Ticket.findById(req.params.ticketid).then( ticket => {
+//         if (!ticket) {
+//           errors.noticket = "ticket not exists";
+//           res.status(404).json(errors);
+//         }
+//         // console.log(currentDate)
+//         // console.log(ticket.bookingTime)
+//         // console.log(ticket.bookingTime.getMinutes())
+//         // verifyTime = moment(currentDate).add(Number(30), 'm').toDate();
+//         // if(currentDate>verifyTime)
+//         res.json(ticket);
+//       })
+//     .catch(err => res.status(404).json({ ticket: "Ticket not exists" }));
+// });
 
 module.exports = router;
