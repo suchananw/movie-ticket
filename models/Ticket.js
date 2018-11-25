@@ -28,9 +28,13 @@ const TicketSchema = new Schema({
     required: true
   },
   bookingTime: {
-    type: String,
+    type: Date,
     required: true
   },
+  user: {
+    type: String,
+    required: true
+  }
 });
 
 module.exports = Ticket = mongoose.model("tickets", TicketSchema);
