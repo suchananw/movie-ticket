@@ -27,11 +27,10 @@ router.post("/add", (req, res) => {
           movie: req.body.movie,
           seat: req.body.seat,
           cinema: req.body.cinema,
-          date: req.body.date,
           showTime: req.body.showTime,
           price: req.body.price,
-          bookingTime: req.body.bookingTime,
           paid: req.body.paid,
+          bookingTime: req.body.bookingTime,
           user: req.body.user
         });
   
@@ -60,4 +59,5 @@ router.post("/:ticketid/status", (req, res) => {
       })
       .catch(err => res.status(404).json({ ticket: "Ticket not exists" }));
   });
+
 module.exports = router;
