@@ -56,7 +56,7 @@ router.post("/add", (req, res) => {
     cinema: req.body.cinema,
     showTime: req.body.showTime,
     amount: req.body.amount,
-    paid: req.body.paid,
+    status: req.body.status,
     bookingTime: currentDate,
     user: req.body.user
   });
@@ -100,7 +100,7 @@ router.get("/:ticketid/status", (req, res) => {
         errors.noticket = "ticket not exists";
         res.status(404).json(errors);
       }
-      res.json(ticket.paid);
+      res.json(ticket.status);
     })
     .catch(err => res.status(404).json({ ticket: "Ticket not exists" }));
 });
@@ -116,7 +116,7 @@ router.get("/:ticketid/updateStatus/:status", (req, res) => {
   //return res.status(400).json(errors);
   // console.log(req.params.ticketid)
   Ticket.findById(req.params.ticketid, function(err, doc) {
-    doc.paid = req.params.status === "true";
+    doc.status = req.params.status;
     doc.save();
   })
     .then(ticket => res.json(ticket))
