@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import './Payment.css';
-
+import { Link } from "react-router-dom";
 class Payment extends Component {
     render(){
       const {data} = this.props.location.state
       console.log(this.props.location.state)
-      const imgscr = "https://api.qrserver.com/v1/create-qr-code/?data="+"billbill"+"&amp;size=100x100";
         return (
             <div class="container p-3">
             <div class="row">
@@ -38,7 +37,23 @@ class Payment extends Component {
                 <thead>
                   <tr>
                     <th scope="col">
-                      <button type="button" class="btn btn-info">Make Payment</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Confirm Payment</button>
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confrim Payment</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary">Confirm</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     </th>
                   </tr>
                 </thead>
@@ -49,5 +64,6 @@ class Payment extends Component {
         );
     }
 }
+
 
 export default Payment;

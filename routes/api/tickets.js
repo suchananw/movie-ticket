@@ -59,24 +59,24 @@ router.post("/add", (req, res) => {
   });
 
 // @route   GET api/tickets/:ticketid/status
-// @desc    Return ticket status 
+// @desc    Return ticket status
 // @access  Private
 router.get("/:ticketid/status", (req, res) => {
-    // const { errors, isValid } = validateMovieInput(req.body);
-  
-    // Check Validation
-    //if (!isValid) {
-    //return res.status(400).json(errors);
-   Ticket.findById(req.params.ticketid)
-      .then( ticket => {
-        if (!ticket) {
-          errors.noticket = "ticket not exists";
-          res.status(404).json(errors);
-        }
-        res.json(ticket.paid);
-      })
-      .catch(err => res.status(404).json({ ticket: "Ticket not exists" }));
-  });
+  // const { errors, isValid } = validateMovieInput(req.body);
+
+  // Check Validation
+  //if (!isValid) {
+  //return res.status(400).json(errors);
+  Ticket.findById(req.params.ticketid)
+    .then(ticket => {
+      if (!ticket) {
+        errors.noticket = "ticket not exists";
+        res.status(404).json(errors);
+      }
+      res.json(ticket.paid);
+    })
+    .catch(err => res.status(404).json({ ticket: "Ticket not exists" }));
+});
 
 // @route   GET api/tickets/:ticketid/updateStatus/:status
 // @desc    update status of ticket specific ticket id

@@ -12,10 +12,10 @@ class SignUp extends Component {
     super();
     this.state = {
       email: "",
-      username: "",
       password: "",
       password2: "",
       birthday: moment(),
+      tel: "",
       errors: {}
     };
   }
@@ -38,11 +38,11 @@ class SignUp extends Component {
     event.preventDefault();
 
     const newUser = {
-      username: this.state.username,
       email: this.state.email,
       password: this.state.password,
       password2: this.state.password2,
-      birthday: this.state.birthday
+      birthday: this.state.birthday,
+      tel: this.state.tel
     };
 
     this.props.registerUser(newUser, this.props.history);
@@ -62,24 +62,6 @@ class SignUp extends Component {
               onChange={this.onChange}
               required
             />
-            <div id="datePicker">
-              <label className="birthday">Birthday</label>
-              <DatePicker
-                id="date"
-                dateFormat="DD/MM/YYYY"
-                maxDate={moment()}
-                onChange={this.onDateChange}
-                selected={this.state.birthday}
-              />
-            </div>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={this.state.username}
-              onChange={this.onChange}
-              required
-            />
             <input
               type="password"
               name="password"
@@ -96,6 +78,24 @@ class SignUp extends Component {
               onChange={this.onChange}
               required
             />
+            <input
+              type="text"
+              name="tel"
+              placeholder="Tel"
+              value={this.state.tel}
+              onChange={this.onChange}
+              required
+            />
+            <div id="datePicker">
+              <label className="birthday">Birthday</label>
+              <DatePicker
+                id="date"
+                dateFormat="DD/MM/YYYY"
+                maxDate={moment()}
+                onChange={this.onDateChange}
+                selected={this.state.birthday}
+              />
+            </div>
             <input type="submit" value="Sign Up" />
           </form>
         </div>

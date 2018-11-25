@@ -17,7 +17,7 @@ import MovieDetail from "./components/MovieDetail";
 import History from "./components/History/History";
 import Payment from "./components/Payment/Payment";
 import MovieBooking from "./components/MovieBooking";
-import BookingConfirm from "./components/BookingConfirm";
+import BookingConfirm from "./components/BookingConfirm/BookingConfirm";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -34,7 +34,7 @@ if (localStorage.jwtToken) {
     // Logout user
     store.dispatch(logoutUser());
     // Redirect to login
-    window.location.href = "/home";
+    window.location.href = "/";
   }
 }
 
