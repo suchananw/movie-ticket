@@ -7,6 +7,7 @@ const validateTicketInput = require("../../validation/ticket");
 
 // Load User model
 const Ticket = require("../../models/Ticket");
+const User = require("../../models/User");
 
 // @route   GET api/tickets/test
 // @desc    ticket test
@@ -36,14 +37,25 @@ router.post("/add", (req, res) => {
   
         newTicket
           .save()
-          .then(ticket => res.json(ticket))
-          .catch(err => console.log(err));
+          .then(ticket => {
+             console.log(ticket)
+             User.findOne({ email: ticket.user }).then(user => {
+              console.log(user)
+              if (!user) {
+                errors.nouser = "User not exists";
+                return res.status(400).json(errors);
+              } else {
+                  user.history.push(ticket._id)
+                  res.json(user)
+              }
+            })
+           }).catch(err => console.log(err));
     });
 
 // @route   GET api/tickets/:ticketid/status
 // @desc    Return ticket status 
 // @access  Private
-router.post("/:ticketid/status", (req, res) => {
+router.get("/:ticketid/status", (req, res) => {
     // const { errors, isValid } = validateMovieInput(req.body);
   
     // Check Validation
@@ -60,4 +72,21 @@ router.post("/:ticketid/status", (req, res) => {
       .catch(err => res.status(404).json({ ticket: "Ticket not exists" }));
   });
 
+// @route   GET api/tickets/:ticketid/updateStatus/:status
+// @desc    update status of ticket specific ticket id
+// @access  Private
+router.get("/:ticketid/updateStatus/:status", (req, res) => {
+    // const { errors, isValid } = validateMovieInput(req.body);
+  
+    // Check Validation
+    //if (!isValid) {
+    //return res.status(400).json(errors);
+    console.log(req.params.ticketid)
+    Ticket.findByIdAndUpdate(req.params.ticketid, { paid: req.params.status})
+    .then(ticket=>
+      // console.log(ticket)
+      res.json(ticket)
+    )
+    .catch(err => res.status(404).json({ ticket: "Ticket not exists" }));
+});
 module.exports = router;
