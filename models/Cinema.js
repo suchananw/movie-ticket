@@ -11,7 +11,7 @@ const CinemaSchema = new Schema({
     type: [String],
     required: false
   },
-  numberofSeat: {
+  price: {
     type: Number,
     required: true
   },
