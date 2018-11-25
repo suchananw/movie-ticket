@@ -89,4 +89,5 @@ router.get("/:ticketid/updateStatus/:status", (req, res) => {
     )
     .catch(err => res.status(404).json({ ticket: "Ticket not exists" }));
 });
+
 module.exports = router;
