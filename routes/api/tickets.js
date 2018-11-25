@@ -29,7 +29,7 @@ router.post("/add", (req, res) => {
           seat: req.body.seat,
           cinema: req.body.cinema,
           showTime: req.body.showTime,
-          price: req.body.price,
+          amount: req.body.amount,
           paid: req.body.paid,
           bookingTime: currentDate,
           user: req.body.user
