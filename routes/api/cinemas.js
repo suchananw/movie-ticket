@@ -118,7 +118,7 @@ router.get("/:cinemaNum/seatStatus/:seatNum", (req, res) => {
 
     Cinema.findOne({ cinemaNumber: req.params.cinemaNum })
     .then(cinema => {
-        console.log(cinema)
+        // console.log(cinema)
         if (!cinema) {
             errors.nocinema = "Cinemas not exists";
             res.status(404).json(errors);
@@ -140,28 +140,27 @@ router.post("/updatestatusSeat", (req, res) => {
 
     Cinema.findOne({ cinemaNumber: req.body.cinemaNum })
     .then(cinema => {
-        // console.log(cinema)
+
         if (!cinema) {
             errors.nocinema = "Cinemas not exists";
             res.status(404).json(errors);
         } 
-        // var seat;
-        for (var i = 0; i < cinema.seats.length; i++) {
-            if(cinema.seats[i].seatNumber ===  req.body.seatNum){
-                // console.log(cinema.seats[i])
-                // console.log(cinema.seats[i].status[0])
-                cinema.seats[i].status[req.body.timeIndex] =  (req.body.status === 'true');
-                // console.log(cinema.seats[i].status[0])
+        for (var j = 0; j < req.body.seatNum.length; j++) {
+            for (var i = 0; i < cinema.seats.length; i++) {
+                if(req.body.seatNum[j] === cinema.seats[i].seatNumber){
+                    // console.log(cinema.seats[i])
+                    // console.log(cinema.seats[i].status[0])
+                    cinema.seats[i].status[req.body.timeIndex] =  (req.body.status === 'true');
+                    // console.log(cinema.seats[i].status[0])
+                }
             }
         }
-
-    var myquery = { cinemaNumber:req.params.cinemaNum };
-    var newvalues = { $set: {seats: cinema.seats} };
-    Cinema.updateOne(myquery, newvalues, function(err, res) {
-        if (err) throw err;
-        console.log("1 document updated");
-    });
-    res.json(cinema);
+        // console.log(cinema.seats)
+        Cinema.findOne({ cinemaNumber : req.body.cinemaNum }, function (err, doc){
+            doc.seats = cinema.seats;
+            doc.save();
+        });
+        res.json(cinema);
     }).catch(err => res.status(404).json({ cinema: "Cinema not exists" }));
 });
 
