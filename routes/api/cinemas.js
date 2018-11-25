@@ -150,7 +150,7 @@ router.post("/updatestatusSeat", (req, res) => {
             if(cinema.seats[i].seatNumber ===  req.body.seatNum){
                 // console.log(cinema.seats[i])
                 // console.log(cinema.seats[i].status[0])
-                cinema.seats[i].status[0] =  (req.body.status === 'true');
+                cinema.seats[i].status[req.body.timeIndex] =  (req.body.status === 'true');
                 // console.log(cinema.seats[i].status[0])
             }
         }
