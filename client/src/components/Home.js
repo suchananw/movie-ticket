@@ -13,11 +13,12 @@ class Home extends Component {
   render() {
     const { movieList, loading } = this.props.movies;
 
-    let content;
+    let content = {};
 
     if (movieList === null || loading) {
       content = "Loading...";
     } else {
+      console.log(movieList);
       content["showing"] = movieList.showing.map(movie => (
         <Card movie={movie} />
       ));
@@ -27,14 +28,12 @@ class Home extends Component {
     }
 
     return (
-      <div className="container">
-        <div className="row m-4">
-          <div className="text-uppercase">
-            <h5>now showing</h5>
-          </div>
-          {content.showing}
+      <div className="container home-header">
+        <div className="row p-4 text-uppercase">
+          <h5>Now Showing</h5>
         </div>
-        <div className="text-uppercase">
+        <div className="row m-4">{content.showing}</div>
+        <div className="row p-4 text-uppercase">
           <h5>Coming Soon</h5>
         </div>
         <div className="row m-4">{content.coming}</div>
