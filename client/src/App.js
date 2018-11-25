@@ -36,15 +36,6 @@ if (localStorage.jwtToken) {
     // Redirect to login
     window.location.href = "/";
   }
-
-  // // Check for expired ticket
-  // const currentTime = Date.now() / 1000;
-  // if (decoded.exp < currentTime) {
-  //   // Logout user
-  //   store.dispatch(logoutUser());
-  //   // Redirect to login
-  //   window.location.href = "/";
-  // }
 }
 
 class App extends Component {
@@ -67,7 +58,11 @@ class App extends Component {
               <PrivateRoute exact path="/history" component={History} />
             </Switch>
             <Switch>
-              <PrivateRoute exact path="/payment" component={Payment} />
+              <PrivateRoute
+                exact
+                path="/history/payment/:ticketID"
+                component={Payment}
+              />
             </Switch>
             <Switch>
               <PrivateRoute

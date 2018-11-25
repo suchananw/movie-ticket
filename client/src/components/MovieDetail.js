@@ -22,7 +22,7 @@ class MovieDetail extends Component {
       );
     } else {
       let genreList = "";
-      const movieGenre = movie.genre.map((genre, index) => {
+      movie.genre.map((genre, index) => {
         if (index === movie.genre.length - 1) {
           return (genreList += genre);
         }

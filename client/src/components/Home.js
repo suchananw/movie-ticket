@@ -3,15 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getMovieList } from "../actions/movieActions";
-import { getUserDetail } from "../actions/userActions";
 import Card from "./Card/Card";
 
 class Home extends Component {
   componentDidMount() {
     this.props.getMovieList();
-    if (this.props.auth.isAuthenticated) {
-      this.props.getUserDetail(this.props.auth.user.id);
-    }
   }
 
   // componentWillReceiveProps(nextProps) {
@@ -53,19 +49,16 @@ class Home extends Component {
 
 Home.propTypes = {
   getMovieList: PropTypes.func.isRequired,
-  getUserDetail: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  movies: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  movies: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  movies: state.movies,
-  user: state.user
+  movies: state.movies
 });
 
 export default connect(
   mapStateToProps,
-  { getMovieList, getUserDetail }
+  { getMovieList}
 )(withRouter(Home));

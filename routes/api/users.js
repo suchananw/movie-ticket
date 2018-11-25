@@ -86,6 +86,7 @@ router.post("/login", (req, res) => {
         // User Matched
         const payload = {
           id: user._id,
+          name: user.name,
           email: user.email,
           birthdate: user.birthdate
         }; // Create JWT Payload
@@ -131,14 +132,14 @@ router.get(
 router.get("/detail/:userid", (req, res) => {
   const errors = {};
   User.findById(req.params.userid)
-  .then(user => {
-    if (!user) {
-      errors.nouser = "User not exists";
-      res.status(404).json(errors);
-    }
-    res.json(user);
-  })
-  .catch(err => res.status(404).json({ User: "User not exists" }));
+    .then(user => {
+      if (!user) {
+        errors.nouser = "User not exists";
+        res.status(404).json(errors);
+      }
+      res.json(user);
+    })
+    .catch(err => res.status(404).json({ User: "User not exists" }));
 });
 
 module.exports = router;
