@@ -2,10 +2,10 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER } from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, GET_USER_DETAIL } from "./types";
 
 // Register User
-export const registerUser = (userData, history) => dispatch => {
+export const registerUser = userData => dispatch => {
   axios.post("/api/users/register", userData).catch(err =>
     dispatch({
       type: GET_ERRORS,
@@ -33,6 +33,24 @@ export const loginUser = userData => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// User Deatil
+export const getUserDetail = userID => dispatch => {
+  axios
+    .get(`/api/users/detail/${userID}`)
+    .then(res =>
+      dispatch({
+        type: GET_USER_DETAIL,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_USER_DETAIL,
         payload: err.response.data
       })
     );

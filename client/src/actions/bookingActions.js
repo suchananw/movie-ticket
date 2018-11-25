@@ -34,7 +34,6 @@ export const createTicket = (ticketDetail, history) => dispatch => {
 
 // Update Seat status
 export const updateStatusSeat = seatDetail => dispatch => {
-  console.log("update seat status", seatDetail);
   axios.post("/api/cinemas/updatestatusSeat", seatDetail).catch(err =>
     dispatch({
       type: GET_ERRORS,

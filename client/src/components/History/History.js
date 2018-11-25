@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { getUserDetail } from "../../actions/authActions";
 import "./History.css";
 
 class ProductRow extends Component {
@@ -86,19 +87,26 @@ class ProductTable extends Component {
 }
 
 class History extends Component {
+  componentDidMount = () => {
+    this.props.getUserDetail(this.props.auth.user.id);
+  };
+
   render() {
+    console.log(this.props);
     return <ProductTable />;
   }
 }
 
 History.propTypes = {
-  auth: PropTypes.object.isRequired,
-  movies: PropTypes.object.isRequired
+  getUserDetail: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  movies: state.movies
+  auth: state.auth
 });
 
-export default connect(mapStateToProps)(withRouter(History));
+export default connect(
+  mapStateToProps,
+  { getUserDetail }
+)(withRouter(History));

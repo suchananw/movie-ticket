@@ -36,6 +36,15 @@ if (localStorage.jwtToken) {
     // Redirect to login
     window.location.href = "/";
   }
+
+  // // Check for expired ticket
+  // const currentTime = Date.now() / 1000;
+  // if (decoded.exp < currentTime) {
+  //   // Logout user
+  //   store.dispatch(logoutUser());
+  //   // Redirect to login
+  //   window.location.href = "/";
+  // }
 }
 
 class App extends Component {
