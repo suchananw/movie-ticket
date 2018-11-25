@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const keys = require("../../config/keys");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const moment = require("moment");
 
 // Load Input Validation
 const validateTicketInput = require("../../validation/ticket");
@@ -9,6 +10,30 @@ const validateTicketInput = require("../../validation/ticket");
 // Load User model
 const Ticket = require("../../models/Ticket");
 const User = require("../../models/User");
+
+// router.use(function(req, res, next) {
+//   Ticket.find()
+//     .then(tickets => {
+//       if (!tickets) {
+//         console.log("No Ticket");
+//       }
+//       let currentDate = new Date();
+//       for (var i = 0; i < tickets.length; i++) {
+//         const bookingTime = new Date(tickets[i].bookingTime);
+//         const expired = moment(bookingTime)
+//           .add(30, "m")
+//           .toDate();
+//         if (expired < currentDate) {
+//           Ticket.findById(tickets[i]._id, function(err, doc) {
+//             doc.paid = req.params.status === "true";
+//             doc.save();
+//           });
+//         }
+//       }
+//     })
+//     .catch(err => console.log(err));
+//   next();
+// });
 
 // @route   GET api/tickets/test
 // @desc    ticket test
@@ -103,7 +128,7 @@ router.get("/:ticketid/updateStatus/:status", (req, res) => {
 // // @access  Private
 router.post("/detail", (req, res) => {
   // const { errors, isValid } = validateMovieInput(req.body);
-  const ticketlist = []
+  const ticketlist = [];
   // Check Validation
   //if (!isValid) {
   //return res.status(400).json(errors);
@@ -119,15 +144,15 @@ router.post("/detail", (req, res) => {
   // }
 
   for (var i = 0; i < req.body.ticketid.length; i++) {
-      // var tmpticket = findticket(req.body.ticketid[i])
-      // console.log(tmpticket)
-      ticketlist.push(new mongoose.Types.ObjectId(req.body.ticketid[i]));
+    // var tmpticket = findticket(req.body.ticketid[i])
+    // console.log(tmpticket)
+    ticketlist.push(new mongoose.Types.ObjectId(req.body.ticketid[i]));
   }
   // console.log(ticketlist)
   // return res.json(ticketlist)
-  Ticket.find({'_id': { $in: ticketlist}}, function(err, docs){
+  Ticket.find({ _id: { $in: ticketlist } }, function(err, docs) {
     //  console.log(docs);
-     return res.json(docs)
+    return res.json(docs);
   });
 });
 
