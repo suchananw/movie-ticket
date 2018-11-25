@@ -80,7 +80,7 @@ router.get("/all", (req, res) => {
             movieCategories.comingsoon.push(movies[i])
         }
     }
-      return res.json(movieCatagires);
+      return res.json(movieCategories);
     })
     .catch(err => res.status(404).json({ movie: "Movie not exists" }));
 });
