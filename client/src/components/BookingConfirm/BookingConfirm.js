@@ -41,7 +41,7 @@ class BookingConfirm extends Component {
       cinema: this.state.cinema,
       showTime: this.state.showtime,
       amount: this.state.price,
-      paid: "false",
+      status: "waiting",
       bookingTime: new Date(),
       user: this.props.auth.user.email
     };

@@ -9,21 +9,20 @@ import "./Payment.css";
 class Payment extends Component {
   handleConfirmPayment = (event, ticketID) => {
     event.preventDefault();
-    this.props.updateTicketStatus(ticketID, true, this.props.history);
+    this.props.updateTicketStatus(ticketID, "paid", this.props.history);
   };
 
   render() {
     const { data } = this.props.location.state;
-    console.log(this.props.location.state);
     return (
       <div class="container p-3">
         <div class="row">
           <div class="col-md-6 img p-3">
-            {/*<img
+            <img
               src="https://api.qrserver.com/v1/create-qr-code/?data=billbill&amp;size=350x350"
               alt=""
               title=""
-            /> */}
+            />
             <br />
             <h4 className="font-weight-bold">Status : {data.status} </h4>
           </div>
@@ -87,13 +86,6 @@ class Payment extends Component {
                             </button>
                           </div>
                           <div class="modal-footer container">
-                            {
-                              // <form
-                              //   onSubmit={e => {
-                              //     this.handleConfirmPayment(e, data.id);
-                              //   }}
-                              // >
-                            }
                             <button
                               type="button"
                               class="btn btn-secondary mx-2"
@@ -113,9 +105,6 @@ class Payment extends Component {
                             >
                               Confirm
                             </button>
-                            {
-                              // </form>
-                            }
                           </div>
                         </div>
                       </div>

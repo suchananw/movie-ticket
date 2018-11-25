@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const keys = require("../../config/keys");
 const mongoose = require("mongoose");
 const moment = require("moment");
 
@@ -10,30 +9,60 @@ const validateTicketInput = require("../../validation/ticket");
 // Load User model
 const Ticket = require("../../models/Ticket");
 const User = require("../../models/User");
+const Cinema = require("../../models/Cinema");
 
-// router.use(function(req, res, next) {
-//   Ticket.find()
-//     .then(tickets => {
-//       if (!tickets) {
-//         console.log("No Ticket");
-//       }
-//       let currentDate = new Date();
-//       for (var i = 0; i < tickets.length; i++) {
-//         const bookingTime = new Date(tickets[i].bookingTime);
-//         const expired = moment(bookingTime)
-//           .add(30, "m")
-//           .toDate();
-//         if (expired < currentDate) {
-//           Ticket.findById(tickets[i]._id, function(err, doc) {
-//             doc.paid = req.params.status === "true";
-//             doc.save();
-//           });
-//         }
-//       }
-//     })
-//     .catch(err => console.log(err));
-//   next();
-// });
+// Check Ticket Timeout
+router.use(function(req, res, next) {
+  // let ticketExpired = [];
+  Ticket.find({ status: "waiting" })
+    .then(tickets => {
+      if (!tickets) {
+        console.log("No Ticket Waiting For Payment");
+      }
+      let currentDate = new Date();
+      for (var i = 0; i < tickets.length; i++) {
+        const bookingTime = new Date(tickets[i].bookingTime);
+        const expired = moment(bookingTime)
+          .add(30, "m")
+          .toDate();
+        if (expired < currentDate) {
+          Ticket.findById(tickets[i]._id, function(err, doc) {
+            doc.status = "expired";
+            doc.save();
+          }).then(ticket => {
+            console.log(ticket);
+            let timeIndex = "";
+            Cinema.findOne({ cinemaNumber: ticket.cinema })
+              .then(cinema => {
+                for (var i = 0; i < cinema.timeTable.length; i++) {
+                  if (cinema.timeTable[i] === ticket.showTime) {
+                    timeIndex = "" + i;
+                  }
+                }
+
+                for (var j = 0; j < ticket.seat.length; j++) {
+                  for (var i = 0; i < cinema.seats.length; i++) {
+                    if (ticket.seat[j] === cinema.seats[i].seatNumber) {
+                      cinema.seats[i].status[timeIndex] = "true";
+                    }
+                  }
+                }
+                Cinema.findOne({ cinemaNumber: ticket.cinema }, function(
+                  err,
+                  doc
+                ) {
+                  doc.seats = cinema.seats;
+                  doc.save();
+                });
+              })
+              .catch(err => console.log("Cinema not exists"));
+          });
+        }
+      }
+    })
+    .catch(err => console.log(err));
+  next();
+});
 
 // @route   GET api/tickets/test
 // @desc    ticket test

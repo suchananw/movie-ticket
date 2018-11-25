@@ -24,11 +24,7 @@ class ProductRow extends Component {
     const expiredTime = expired.getHours() + ":" + expired.getMinutes();
 
     let paymentButton = [];
-    let status = null;
-    if (ticket.paid) {
-      status = "PAID";
-    } else {
-      status = "WAITING";
+    if (ticket.status == "waiting") {
       paymentButton.push(
         <button type="button" class="btn btn-info">
           Payment
@@ -43,8 +39,14 @@ class ProductRow extends Component {
       showtime: ticket.showTime,
       price: ticket.amount,
       expried: expiredTime,
-      status: status
+      status: ticket.status
     };
+    let statusStyle = "";
+    if (ticket.status == "paid") {
+      statusStyle = "text-success";
+    } else if (ticket.status == "expired") {
+      statusStyle = "text-danger";
+    }
 
     return (
       <tr>
@@ -55,7 +57,9 @@ class ProductRow extends Component {
         <td>{data.showtime}</td>
         <td>{data.price} baht</td>
         <td>{data.expried}</td>
-        <td>{data.status}</td>
+        <td className={`text-uppercase font-weight-bold ${statusStyle}`}>
+          {data.status}
+        </td>
         <td>
           <Link
             to={{
