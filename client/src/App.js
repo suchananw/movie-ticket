@@ -52,7 +52,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
             </Switch>
             <Switch>
-              <PrivateRoute exact path="/movie/:name" component={MovieDetail} />
+              <Route exact path="/movie/:name" component={MovieDetail} />
             </Switch>
             <Switch>
               <PrivateRoute exact path="/history" component={History} />

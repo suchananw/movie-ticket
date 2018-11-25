@@ -18,52 +18,53 @@ router.get("/test", (req, res) => res.json({ msg: "ticket Works" }));
 // @desc    Add ticket
 // @access  Public
 router.post("/add", (req, res) => {
-    const { errors, isValid } = validateTicketInput(req.body);
-    var currentDate = new Date()
-    // // Check Validation
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-        const newTicket = new Ticket({
-          movie: req.body.movie,
-          seat: req.body.seat,
-          cinema: req.body.cinema,
-          showTime: req.body.showTime,
-          amount: req.body.amount,
-          paid: req.body.paid,
-          bookingTime: currentDate,
-          user: req.body.user
+  const { errors, isValid } = validateTicketInput(req.body);
+  var currentDate = new Date();
+  // // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+  const newTicket = new Ticket({
+    movie: req.body.movie,
+    seat: req.body.seat,
+    cinema: req.body.cinema,
+    showTime: req.body.showTime,
+    amount: req.body.amount,
+    paid: req.body.paid,
+    bookingTime: currentDate,
+    user: req.body.user
+  });
+
+  newTicket.save().then(ticket => {
+    //  console.log(ticket)
+    User.findOne({ email: ticket.user }).then(user => {
+      // console.log(user)
+      if (!user) {
+        errors.nouser = "User not exists";
+        return res.status(400).json(errors);
+      } else {
+        user.history.push(ticket._id);
+        // res.json(user)
+      }
+      // User.findOneAndUpdate({ email: ticket.user },{history : user.history})
+      User.findOne({ email: ticket.user }, function(err, doc) {
+        doc.history = user.history;
+        // doc.visits.$inc();
+        doc.save();
+      }).then(user => {
+        res.json({
+          success: true
         });
-  
-        newTicket
-          .save()
-          .then(ticket => {
-            //  console.log(ticket)
-             User.findOne({ email: ticket.user }).then(user => {
-              // console.log(user)
-              if (!user) {
-                errors.nouser = "User not exists";
-                return res.status(400).json(errors);
-              } else {
-                  user.history.push(ticket._id)
-                  // res.json(user)
-              }
-              // User.findOneAndUpdate({ email: ticket.user },{history : user.history})
-              User.findOne({ email: ticket.user }, function (err, doc){
-                doc.history = user.history;
-                // doc.visits.$inc();
-                doc.save();
-              });
-            })  
+      });
     });
   });
+});
 
 // @route   GET api/tickets/:ticketid/status
 // @desc    Return ticket status
 // @access  Private
 router.get("/:ticketid/status", (req, res) => {
-  // const { errors, isValid } = validateMovieInput(req.body);
-
+  const errors = {};
   // Check Validation
   //if (!isValid) {
   //return res.status(400).json(errors);
@@ -82,16 +83,17 @@ router.get("/:ticketid/status", (req, res) => {
 // @desc    update status of ticket specific ticket id
 // @access  Private
 router.get("/:ticketid/updateStatus/:status", (req, res) => {
-    // const { errors, isValid } = validateMovieInput(req.body);
-  
-    // Check Validation
-    //if (!isValid) {
-    //return res.status(400).json(errors);
-    // console.log(req.params.ticketid)
-    Ticket.findById(req.params.ticketid, function (err, doc){
-      doc.paid = (req.params.status === 'true')
-      doc.save();
-    }).then(ticket => res.json(ticket))
+  // const { errors, isValid } = validateMovieInput(req.body);
+
+  // Check Validation
+  //if (!isValid) {
+  //return res.status(400).json(errors);
+  // console.log(req.params.ticketid)
+  Ticket.findById(req.params.ticketid, function(err, doc) {
+    doc.paid = req.params.status === "true";
+    doc.save();
+  })
+    .then(ticket => res.json(ticket))
     .catch(err => res.status(404).json({ ticket: "Ticket not exists" }));
 });
 

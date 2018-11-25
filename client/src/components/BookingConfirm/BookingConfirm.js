@@ -43,25 +43,25 @@ class BookingConfirm extends Component {
       amount: this.state.price,
       paid: "false",
       bookingTime: new Date(),
-      user: "test2@mail.com"
+      user: this.props.auth.user.email
     };
 
     const seatDetail = {
       cinemaNum: this.state.cinema,
       seatNum: this.state.seats,
-      timeIndex: this.props.location.state.timeIndex,
+      timeIndex: "" + this.props.location.state.timeIndex,
       status: "false"
     };
 
-    this.props.createTicket(ticketDetail, this.props.history);
     this.props.updateStatusSeat(seatDetail);
+    this.props.createTicket(ticketDetail, this.props.history);
   };
 
   getSelectedSeats = state => {
     let selectedSeats = [];
     for (var i = 0; i < Object.keys(state).length; i++) {
       if (state[i] === false) {
-        selectedSeats.push(i);
+        selectedSeats.push(i.toString());
       }
     }
     return selectedSeats;
@@ -168,5 +168,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createTicket }
+  { createTicket, updateStatusSeat }
 )(withRouter(BookingConfirm));

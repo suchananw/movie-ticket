@@ -58,8 +58,6 @@ class MovieBooking extends Component {
 }
 
 MovieBooking.propTypes = {
-  getShowtime: PropTypes.func.isRequired,
-  getMovieDetail: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   movies: PropTypes.object.isRequired,
   cinema: PropTypes.object.isRequired
