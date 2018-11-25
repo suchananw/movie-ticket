@@ -67,7 +67,11 @@ class App extends Component {
               <PrivateRoute exact path="/history" component={History} />
             </Switch>
             <Switch>
-              <PrivateRoute exact path="/payment" component={Payment} />
+              <PrivateRoute
+                exact
+                path="/history/payment/:ticketID"
+                component={Payment}
+              />
             </Switch>
             <Switch>
               <PrivateRoute

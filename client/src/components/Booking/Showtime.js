@@ -14,7 +14,6 @@ export default class Showtime extends Component {
     timetable.map((time, index) => {
       const showtime = new Date();
       showtime.setHours(Number(time.slice(0, 2)));
-      console.log(showtime.getHours(), "  ", currenttime);
       if (showtime.getHours() < currenttime) {
         timeButton.push(
           <input

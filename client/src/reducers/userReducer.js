@@ -2,7 +2,8 @@ import {
   GET_USER_DETAIL,
   GET_TICKETS_DETAIL,
   USER_LOADING,
-  TICKETS_LOADING
+  TICKETS_LOADING,
+  UPDATE_TICKET_STATUS
 } from "../actions/types";
 
 const initialState = {
@@ -34,6 +35,11 @@ export default function(state = initialState, action) {
         ...state,
         ticketsDetail: action.payload,
         loading: false
+      };
+    case UPDATE_TICKET_STATUS:
+      return {
+        ...state,
+        loading: true
       };
     default:
       return state;

@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import {
+  GET_ERRORS,
   GET_USER_DETAIL,
   GET_TICKETS_DETAIL,
   USER_LOADING,
@@ -41,6 +42,20 @@ export const getTicketsDetail = ticketsID => dispatch => {
       dispatch({
         type: GET_TICKETS_DETAIL,
         payload: {}
+      })
+    );
+};
+
+// Update ticket status
+export const updateTicketStatus = (ticketID, status, history) => dispatch => {
+  dispatch(setTicketsDetailLoading());
+  axios
+    .get(`/api/tickets/${ticketID}/updateStatus/${status}`)
+    .then(res => history.push("/history"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
       })
     );
 };

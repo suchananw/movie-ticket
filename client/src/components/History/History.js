@@ -3,12 +3,49 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
+import moment from "moment";
 import { getUserDetail, getTicketsDetail } from "../../actions/userActions";
 import "./History.css";
 
 class ProductRow extends Component {
   render() {
-    const { data, index } = this.props;
+    const { ticket, index } = this.props;
+    let seatList = "";
+    ticket.seat.map((seatNumber, index) => {
+      if (index === ticket.seat.length - 1) {
+        return (seatList += seatNumber);
+      }
+      seatList += seatNumber + ", ";
+    });
+    const bookingTime = new Date(ticket.bookingTime);
+    const expired = moment(bookingTime)
+      .add(30, "m")
+      .toDate();
+    const expiredTime = expired.getHours() + ":" + expired.getMinutes();
+
+    let paymentButton = [];
+    let status = null;
+    if (ticket.paid) {
+      status = "PAID";
+    } else {
+      status = "WAITING";
+      paymentButton.push(
+        <button type="button" class="btn btn-info">
+          Payment
+        </button>
+      );
+    }
+    const data = {
+      id: ticket._id,
+      movie: ticket.movie,
+      seat: seatList,
+      cinema: ticket.cinema,
+      showtime: ticket.showTime,
+      price: ticket.amount,
+      expried: expiredTime,
+      status: status
+    };
+
     return (
       <tr>
         <td>{index + 1}</td>
@@ -16,20 +53,17 @@ class ProductRow extends Component {
         <td>{data.cinema}</td>
         <td>{data.seat}</td>
         <td>{data.showtime}</td>
-        <td>{data.date}</td>
         <td>{data.price} baht</td>
         <td>{data.expried}</td>
         <td>{data.status}</td>
         <td>
           <Link
             to={{
-              pathname: `/payment`,
+              pathname: `/history/payment/${data.id}`,
               state: { data: data }
             }}
           >
-            <button type="button" class="btn btn-info">
-              Payment
-            </button>
+            {paymentButton}
           </Link>
         </td>
       </tr>
@@ -38,32 +72,11 @@ class ProductRow extends Component {
 }
 class ProductTable extends Component {
   render() {
-    const data = [
-      {
-        movie: "Fantastic Beasts: The Crimes of Grindelwald",
-        seat: "1",
-        cinema: "1",
-        showtime: "11:11",
-        date: "12/11/2018",
-        price: "1234",
-        expried: "aaaa",
-        status: "PAID"
-      },
-      {
-        movie: "punchpunch",
-        seat: "2,3,4",
-        cinema: "2",
-        showtime: "11:11",
-        date: "12/11/2018",
-        price: "123421",
-        expried: "12213",
-        status: "WAITING"
-      }
-    ];
-
-    const rows = data.map((data, index) => (
-      <ProductRow data={data} index={index} />
-    ));
+    const ticketList = this.props.ticketList;
+    const rows = [];
+    ticketList.map((ticket, index) =>
+      rows.push(<ProductRow key={index} ticket={ticket} index={index} />)
+    );
     return (
       <table className="history">
         <thead>
@@ -73,9 +86,8 @@ class ProductTable extends Component {
             <th>Cinema</th>
             <th>Seat</th>
             <th>Showtime</th>
-            <th>Date</th>
             <th>Price</th>
-            <th>Expried</th>
+            <th>Expired</th>
             <th>Status</th>
             <th />
           </tr>
@@ -88,14 +100,31 @@ class ProductTable extends Component {
 
 class History extends Component {
   componentDidMount = () => {
-    this.props.getUserDetail(this.props.auth.user._id);
-    if (this.props.user.userDetail)
-      this.props.getTicketsDetail(this.props.user.userDetail.history);
+    this.props.getUserDetail(this.props.auth.user.id);
+  };
+
+  componentWillReceiveProps = nextprops => {
+    if (nextprops.user.userDetail !== this.props.user.userDetail) {
+      const ticketList = { ticketid: nextprops.user.userDetail.history };
+      this.updateTicketsDetail(ticketList);
+    }
+  };
+
+  updateTicketsDetail = ticketList => {
+    this.props.getTicketsDetail(ticketList);
   };
 
   render() {
-    console.log(this.props);
-    return <ProductTable />;
+    const { ticketsDetail, loading } = this.props.user;
+    if (ticketsDetail === null || loading) {
+      return (
+        <div className="container">
+          <div className="row m-4">Loading...</div>
+        </div>
+      );
+    } else {
+      return <ProductTable ticketList={this.props.user.ticketsDetail} />;
+    }
   }
 }
 
