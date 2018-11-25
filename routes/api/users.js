@@ -125,12 +125,12 @@ router.get(
   }
 );
 
-// @route   POST api/users/detail
+// @route   GET api/users/detail
 // @desc    Return detail user specific id
 // @access  Public
-router.post("/detail", (req, res) => {
+router.get("/detail/:userid", (req, res) => {
   const errors = {};
-  User.findById(req.body.userid)
+  User.findById(req.params.userid)
   .then(user => {
     if (!user) {
       errors.nouser = "User not exists";
