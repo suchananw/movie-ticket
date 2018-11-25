@@ -9,58 +9,86 @@ class Seatplan extends Component {
   constructor() {
     super();
     this.state = {
-      "1": false,
-      "2": false,
-      "3": false,
-      "4": false,
-      "5": false,
-      "6": false,
-      "7": false,
-      "8": false,
-      "9": false,
-      "10": false,
-      "11": false,
-      "12": false,
-      "13": false,
-      "14": false,
-      "15": false,
-      "16": false,
-      "17": false,
-      "18": false,
-      "19": false,
-      "20": false,
-      "21": false,
-      "22": false,
-      "23": false,
-      "24": false,
-      "25": false,
-      "26": false,
-      "27": false,
-      "28": false,
-      "29": false,
-      "30": false,
-      "31": false,
-      "32": false,
-      "33": false,
-      "34": false,
-      "35": false,
-      "36": false,
-      "37": false,
-      "38": false,
-      "39": false,
-      "40": false
+      "1": true,
+      "2": true,
+      "3": true,
+      "4": true,
+      "5": true,
+      "6": true,
+      "7": true,
+      "8": true,
+      "9": true,
+      "10": true,
+      "11": true,
+      "12": true,
+      "13": true,
+      "14": true,
+      "15": true,
+      "16": true,
+      "17": true,
+      "18": true,
+      "19": true,
+      "20": true,
+      "21": true,
+      "22": true,
+      "23": true,
+      "24": true,
+      "25": true,
+      "26": true,
+      "27": true,
+      "28": true,
+      "29": true,
+      "30": true,
+      "31": true,
+      "32": true,
+      "33": true,
+      "34": true,
+      "35": true,
+      "36": true,
+      "37": true,
+      "38": true,
+      "39": true,
+      "40": true
     };
   }
 
-  handleSeatChange(event) {
+  componentDidMount = () => {
+    if (this.props.cinema.cinema) {
+      console.log("set initial seat status");
+      this.setInitialSeatStatus(this.props.cinema.cinema.seats);
+    }
+  };
+
+  // Seat Status in Checkbox
+  // True === Checked === Booked
+  // False === Not checked === Available
+  handleSeatChange = event => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
+    this.setState(
+      {
+        [name]: !value
+      },
+      () => {
+        console.log(this.state);
+      }
+    );
+  };
 
-    this.setState({
-      [name]: value
+  // Seat Status in database
+  // True === Available
+  // False === Booked
+  setInitialSeatStatus = seats => {
+    console.log(this.props.timeIndex);
+    console.log(seats);
+    seats.map(seat => {
+      console.log(seat);
+      this.setState({
+        [seat.seatNumber]: seat.status[this.props.timeIndex - 1]
+      });
     });
-  }
+  };
 
   genSeat = seats => {
     let row = [];
@@ -77,41 +105,30 @@ class Seatplan extends Component {
     }
     return row;
   };
+
   genSeatRow = row => {
     return row.map(seat => {
+      let seatNumber = seat.seatNumber;
       return (
         <td className="seat">
           <input
-            name={seat}
+            name={seatNumber}
             type="checkbox"
-            id={seat}
-            checked={this.state[seat]}
-            onChange={this.handleInputChange}
+            id={seatNumber}
+            checked={!this.state[seatNumber]}
+            onChange={this.handleSeatChange}
           />
-          <label for={seat}>{seat}</label>
+          <label for={seatNumber}>{seatNumber}</label>
         </td>
       );
     });
   };
 
   render() {
-    const { cinema, seat } = this.props;
+    const { cinema } = this.props.cinema;
     console.log(this.props);
-    const seats = [
-      "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "10",
-      "11",
-      "12",
-      "13"
-    ];
+    const seats = cinema.seats;
+
     return (
       <div className="container seatplan p-4">
         <table class="fuselage">

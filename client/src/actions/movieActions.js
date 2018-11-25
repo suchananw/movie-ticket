@@ -1,10 +1,9 @@
 import axios from "axios";
 import { GET_MOVIES_LIST, GET_MOVIE_DETAIL, MOVIE_LOADING } from "./types";
 
-// Get cat by id
+// Get movie detail by id
 export const getMovieDetail = id => dispatch => {
   dispatch(setMovieLoading());
-  console.log("action " + id)
   axios
     .get(`/api/movies/detail/${id}`)
     .then(res =>
