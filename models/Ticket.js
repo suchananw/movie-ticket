@@ -29,7 +29,7 @@ const TicketSchema = new Schema({
   },
   bookingTime: {
     type: Date,
-    required: true
+    required: false
   },
   user: {
     type: String,
