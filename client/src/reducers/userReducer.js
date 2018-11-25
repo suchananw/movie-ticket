@@ -1,13 +1,14 @@
 import {
   GET_USER_DETAIL,
-  GET_TICKET_DETAIL,
+  GET_TICKETS_DETAIL,
   USER_LOADING,
-  TICKET_LOADING
+  TICKETS_LOADING,
+  UPDATE_TICKET_STATUS
 } from "../actions/types";
 
 const initialState = {
   userDetail: null,
-  ticketDetail: null,
+  ticketsDetail: null,
   loading: false
 };
 
@@ -18,7 +19,7 @@ export default function(state = initialState, action) {
         ...state,
         loading: true
       };
-    case TICKET_LOADING:
+    case TICKETS_LOADING:
       return {
         ...state,
         loading: true
@@ -29,11 +30,16 @@ export default function(state = initialState, action) {
         userDetail: action.payload,
         loading: false
       };
-    case GET_TICKET_DETAIL:
+    case GET_TICKETS_DETAIL:
       return {
         ...state,
-        ticketDetail: action.payload,
+        ticketsDetail: action.payload,
         loading: false
+      };
+    case UPDATE_TICKET_STATUS:
+      return {
+        ...state,
+        loading: true
       };
     default:
       return state;
