@@ -32,6 +32,16 @@ export const createTicket = (ticketDetail, history) => dispatch => {
     );
 };
 
+// Update Seat status
+export const updateStatusSeat = seatDetail => dispatch => {
+  axios.post("/api/cinemas/updatestatusSeat", seatDetail).catch(err =>
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    })
+  );
+};
+
 // Showtime loading
 export const setShowtimeLoading = () => {
   return {

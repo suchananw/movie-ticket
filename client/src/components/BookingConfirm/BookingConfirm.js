@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
-import { createTicket } from "../../actions/bookingActions";
+import { createTicket, updateStatusSeat } from "../../actions/bookingActions";
 import "./BookingConfirm.css";
 
 class BookingConfirm extends Component {
@@ -46,7 +46,15 @@ class BookingConfirm extends Component {
       user: "test2@mail.com"
     };
 
+    const seatDetail = {
+      cinemaNum: this.state.cinema,
+      seatNum: this.state.seats,
+      timeIndex: this.props.location.state.timeIndex,
+      status: "false"
+    };
+
     this.props.createTicket(ticketDetail, this.props.history);
+    this.props.updateStatusSeat(seatDetail);
   };
 
   getSelectedSeats = state => {
