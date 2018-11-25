@@ -57,6 +57,10 @@ class BookingConfirm extends Component {
     this.props.createTicket(ticketDetail, this.props.history);
   };
 
+  onCancel = () => {
+    this.props.history.goBack();
+  };
+
   getSelectedSeats = state => {
     let selectedSeats = [];
     for (var i = 0; i < Object.keys(state).length; i++) {
@@ -142,7 +146,9 @@ class BookingConfirm extends Component {
               </table>
             </div>
             <div className="container">
-              <button class="btn btn-danger m-3">Cancel</button>
+              <button class="btn btn-danger m-3" onClick={this.onCancel}>
+                Cancel
+              </button>
               <button class="btn btn-success m-3" onClick={this.onSubmit}>
                 Confrim
               </button>

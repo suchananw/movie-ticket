@@ -6,3 +6,7 @@
 .showtime-box {
   background-color: whitesmoke;
 }
+
+.showtime-button :disabled {
+  background-color: gray;
+}
