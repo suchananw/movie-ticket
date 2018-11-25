@@ -104,20 +104,6 @@ router.get("/:ticketid/updateStatus/:status", (req, res) => {
 router.post("/detail", (req, res) => {
   // const { errors, isValid } = validateMovieInput(req.body);
   const ticketlist = []
-  // Check Validation
-  //if (!isValid) {
-  //return res.status(400).json(errors);
-  // findticket = (id) => {
-  //   Ticket.findById(id).then( ticket => {
-  //     // console.log(ticket)
-  //     if (!ticket) {
-  //       errors.noticket = "ticket not exists";
-  //       res.status(404).json(errors);
-  //     }
-  //     return ticket;
-  //   })
-  // }
-
   for (var i = 0; i < req.body.ticketid.length; i++) {
       // var tmpticket = findticket(req.body.ticketid[i])
       // console.log(tmpticket)
