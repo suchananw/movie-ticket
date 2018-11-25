@@ -28,7 +28,7 @@ export default class Card extends Component {
         <Link
           to={{
             pathname: `/booking/${movie.name}`,
-            state: { cinemaID: movie.cinema }
+            state: { movie: movie }
           }}
         >
           <input className="p-2" type="button" value="Buy Ticket" />

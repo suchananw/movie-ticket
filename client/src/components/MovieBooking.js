@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getShowtime } from "../actions/bookingActions";
+import { getMovieDetail } from "../actions/movieActions";
 
 import Showtime from "./Booking/Showtime";
 import Seatplan from "./Booking/Seatplan";
@@ -16,8 +17,11 @@ class MovieBooking extends Component {
   }
 
   componentDidMount() {
-    if (this.props.location.state.cinemaID) {
-      this.props.getShowtime(this.props.location.state.cinemaID);
+    if (this.props.movies.movie === null) {
+      this.props.getMovieDetail(this.props.location.state.movie._id);
+    }
+    if (this.props.location.state.movie) {
+      this.props.getShowtime(this.props.location.state.movie.cinema);
     }
   }
 
@@ -37,6 +41,7 @@ class MovieBooking extends Component {
         </div>
       );
     } else {
+      console.log(this.props);
       return (
         <div className="container">
           <div>
@@ -44,8 +49,8 @@ class MovieBooking extends Component {
           </div>
           {this.state.time !== null ? (
             <div>
-              <Seatplan />
-              <input type="button" value="Confirm" />
+              <Seatplan timeIndex={this.state.time} />
+              <input type="button" value="Next" />
             </div>
           ) : null}
         </div>
@@ -56,6 +61,7 @@ class MovieBooking extends Component {
 
 MovieBooking.propTypes = {
   getShowtime: PropTypes.func.isRequired,
+  getMovieDetail: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   movies: PropTypes.object.isRequired,
   cinema: PropTypes.object.isRequired
@@ -69,5 +75,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getShowtime }
+  { getShowtime, getMovieDetail }
 )(withRouter(MovieBooking));
