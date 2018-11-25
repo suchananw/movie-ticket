@@ -55,7 +55,7 @@ router.post("/add", (req, res) => {
 // @access  Private
 router.get("/all", (req, res) => {
   const errors = {};
-  var movieCatagires = {
+  var movieCategories = {
     "showing" : [],
     "comingsoon" : [],
     "ending" : []
@@ -70,14 +70,14 @@ router.get("/all", (req, res) => {
       for (var i = 0; i < movies.length; i++) {
         if(currentDate > movies[i].startdate || currentDate === movies[i].startdate){
             if(currentDate < movies[i].enddate || currentDate === movies[i].enddate){
-              movieCatagires.showing.push(movies[i])
+              movieCategories.showing.push(movies[i])
             }
             else{
-              movieCatagires.ending.push(movies[i])
+              movieCategories.ending.push(movies[i])
             }
           }
         else{
-            movieCatagires.comingsoon.push(movies[i])
+            movieCategories.comingsoon.push(movies[i])
         }
     }
       return res.json(movieCatagires);
