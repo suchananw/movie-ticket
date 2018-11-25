@@ -13,14 +13,14 @@ class SignIn extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   if (!this.props) {
-  //     window.location.href = "/home";
-  //   }
-  //   if (this.props.auth.isAuthenticated) {
-  //     this.props.history.push("/home");
-  //   }
-  // }
+  componentDidMount() {
+    if (!this.props) {
+      window.location.href = "/";
+    }
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {

@@ -11,11 +11,12 @@ class SignUp extends Component {
   constructor() {
     super();
     this.state = {
+      name: "",
       email: "",
-      username: "",
       password: "",
       password2: "",
-      birthday: moment(),
+      birthdate: moment(),
+      tel: "",
       errors: {}
     };
   }
@@ -31,18 +32,19 @@ class SignUp extends Component {
   };
 
   onDateChange = event => {
-    this.setState({ birthday: event });
+    this.setState({ birthdate: event });
   };
 
   onSubmit = event => {
     event.preventDefault();
 
     const newUser = {
-      username: this.state.username,
+      name: this.state.name,
       email: this.state.email,
       password: this.state.password,
       password2: this.state.password2,
-      birthday: this.state.birthday
+      birthdate: this.state.birthdate,
+      tel: this.state.tel
     };
 
     this.props.registerUser(newUser, this.props.history);
@@ -55,28 +57,18 @@ class SignUp extends Component {
         <div className="container">
           <form onSubmit={this.onSubmit}>
             <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={this.state.name}
+              onChange={this.onChange}
+              required
+            />
+            <input
               type="email"
               name="email"
               placeholder="E-mail"
               value={this.state.email}
-              onChange={this.onChange}
-              required
-            />
-            <div id="datePicker">
-              <label className="birthday">Birthday</label>
-              <DatePicker
-                id="date"
-                dateFormat="DD/MM/YYYY"
-                maxDate={moment()}
-                onChange={this.onDateChange}
-                selected={this.state.birthday}
-              />
-            </div>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={this.state.username}
               onChange={this.onChange}
               required
             />
@@ -96,6 +88,24 @@ class SignUp extends Component {
               onChange={this.onChange}
               required
             />
+            <input
+              type="text"
+              name="tel"
+              placeholder="Tel"
+              value={this.state.tel}
+              onChange={this.onChange}
+              required
+            />
+            <div id="datePicker">
+              <label className="birthday">Birthday</label>
+              <DatePicker
+                id="date"
+                dateFormat="DD/MM/YYYY"
+                maxDate={moment()}
+                onChange={this.onDateChange}
+                selected={this.state.birthdate}
+              />
+            </div>
             <input type="submit" value="Sign Up" />
           </form>
         </div>

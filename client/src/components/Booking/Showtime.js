@@ -7,17 +7,36 @@ export default class Showtime extends Component {
   };
 
   render() {
+    const currenttime = new Date().getHours();
     const { cinema } = this.props;
     const timetable = cinema.timeTable;
-    const timeButton = timetable.map((time, index) => (
-      <input
-        className="showtime-button p-3 m-2"
-        key={index}
-        type="button"
-        value={time}
-        onClick={() => this.onClick(index)}
-      />
-    ));
+    const timeButton = [];
+    timetable.map((time, index) => {
+      const showtime = new Date();
+      showtime.setHours(Number(time.slice(0, 2)));
+      console.log(showtime.getHours(), "  ", currenttime);
+      if (showtime.getHours() < currenttime) {
+        timeButton.push(
+          <input
+            className="showtime-button p-3 m-2 disabled"
+            key={index}
+            type="button"
+            value={time}
+            disabled="disabled"
+          />
+        );
+      } else {
+        timeButton.push(
+          <input
+            className="showtime-button p-3 m-2"
+            key={index}
+            type="button"
+            value={time}
+            onClick={() => this.onClick(index)}
+          />
+        );
+      }
+    });
 
     return (
       <div className="container showtime-box p-4">

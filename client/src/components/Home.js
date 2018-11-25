@@ -18,12 +18,11 @@ class Home extends Component {
     if (movieList === null || loading) {
       content = "Loading...";
     } else {
-      console.log(movieList);
       content["showing"] = movieList.showing.map(movie => (
         <Card movie={movie} />
       ));
       content["coming"] = movieList.comingsoon.map(movie => (
-        <Card movie={movie} />
+        <Card movie={movie} status="coming" />
       ));
     }
 

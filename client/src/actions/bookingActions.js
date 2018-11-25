@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_SHOWTIME, SHOWTIME_LOADING } from "./types";
+import { GET_SHOWTIME, SHOWTIME_LOADING, GET_ERRORS } from "./types";
 
 export const getShowtime = cinemaNumber => dispatch => {
   dispatch(setShowtimeLoading());
@@ -17,6 +17,30 @@ export const getShowtime = cinemaNumber => dispatch => {
         payload: {}
       })
     );
+};
+
+// Create ticket
+export const createTicket = (ticketDetail, history) => dispatch => {
+  axios
+    .post("/api/tickets/add", ticketDetail)
+    .then(res => history.push("/"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Update Seat status
+export const updateStatusSeat = seatDetail => dispatch => {
+  console.log("update seat status", seatDetail);
+  axios.post("/api/cinemas/updatestatusSeat", seatDetail).catch(err =>
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    })
+  );
 };
 
 // Showtime loading
