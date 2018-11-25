@@ -70,13 +70,6 @@ class App extends Component {
                 component={BookingConfirm}
               />
             </Switch>
-            <Switch>
-              <Route
-                exact
-                path="/ticketdetail"
-                component={TicketDetail}
-              />
-            </Switch>
             <Footer />
           </div>
         </Router>
