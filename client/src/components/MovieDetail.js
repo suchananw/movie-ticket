@@ -13,7 +13,6 @@ class MovieDetail extends Component {
 
   render() {
     const { movie, loading } = this.props.movies;
-    console.log("movie " + movie);
     if (movie === null || loading) {
       return (
         <div className="container">
@@ -21,6 +20,7 @@ class MovieDetail extends Component {
         </div>
       );
     } else {
+      const status = this.props.location.state.status;
       let genreList = "";
       movie.genre.map((genre, index) => {
         if (index === movie.genre.length - 1) {
@@ -72,16 +72,18 @@ class MovieDetail extends Component {
                 </tbody>
               </table>
             </div>
-            <div className="container m-3">
-              <Link
-                to={{
-                  pathname: `/booking/${movie.name}`,
-                  state: { movie: movie }
-                }}
-              >
-                <input type="button" value="Buy Ticket" />
-              </Link>
-            </div>
+            {status === "coming" ? null : (
+              <div className="container m-3">
+                <Link
+                  to={{
+                    pathname: `/booking/${movie.name}`,
+                    state: { movie: movie }
+                  }}
+                >
+                  <input type="button" value="Buy Ticket" />
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       );

@@ -7,6 +7,11 @@
   background-color: whitesmoke;
 }
 
-.showtime-button :disabled {
+.showtime-disabled {
   background-color: gray;
+}
+
+.showtime-disabled :hover {
+  background-color: gray;
+  cursor: not-allowed;
 }

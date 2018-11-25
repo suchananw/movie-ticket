@@ -25,7 +25,7 @@ export default class Card extends Component {
         <Link
           to={{
             pathname: `/movie/${movie.name}`,
-            state: { movieID: movieID }
+            state: { movieID: movieID, status: status }
           }}
         >
           <input className="p-2" type="button" value="Detail" />

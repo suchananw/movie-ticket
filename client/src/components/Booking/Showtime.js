@@ -17,7 +17,7 @@ export default class Showtime extends Component {
       if (showtime.getHours() < currenttime) {
         timeButton.push(
           <input
-            className="showtime-button p-3 m-2 disabled"
+            className="showtime-button p-3 m-2 showtime-disabled"
             key={index}
             type="button"
             value={time}
