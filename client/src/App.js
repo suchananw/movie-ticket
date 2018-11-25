@@ -17,7 +17,7 @@ import MovieDetail from "./components/MovieDetail";
 import History from "./components/History/History";
 import Payment from "./components/Payment/Payment";
 import MovieBooking from "./components/MovieBooking";
-
+import TicketDetail from "./components/TicketDetail/TicketDetail";
 // Check for token
 if (localStorage.jwtToken) {
   // Set auth token header auth
