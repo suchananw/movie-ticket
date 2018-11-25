@@ -18,7 +18,7 @@ import History from "./components/History/History";
 import Payment from "./components/Payment/Payment";
 import MovieBooking from "./components/MovieBooking";
 import BookingConfirm from "./components/BookingConfirm";
-
+import TicketDetail from "./components/TicketDetail/TicketDetail";
 // Check for token
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -68,6 +68,13 @@ class App extends Component {
                 exact
                 path="/booking/:name/confirm"
                 component={BookingConfirm}
+              />
+            </Switch>
+            <Switch>
+              <Route
+                exact
+                path="/ticketdetail"
+                component={TicketDetail}
               />
             </Switch>
             <Footer />
