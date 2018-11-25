@@ -8,7 +8,6 @@ export default class Showtime extends Component {
 
   render() {
     const { cinema } = this.props;
-    console.log(this.props);
     const timetable = cinema.timeTable;
     const timeButton = timetable.map((time, index) => (
       <input

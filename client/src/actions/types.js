@@ -11,7 +11,6 @@ export const MOVIE_LOADING = "MOVIE_LOADING";
 export const SET_CURRENT_MOVIE = "SET_CURRENT_MOVIE";
 // Booking Action
 export const GET_SHOWTIME = "GET_SHOWTIME";
-export const GET_SEAT = "GET_SEAT";
 export const CLEAR_CURRENT_ROUND = "CLEAR_CURRENT_ROUND";
 export const CLEAR_CURRENT_SEAT = "CLEAR_CURRENT_SEAT";
 export const SHOWTIME_LOADING = "SHOWTIME_LOADING";

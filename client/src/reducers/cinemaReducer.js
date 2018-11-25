@@ -1,6 +1,5 @@
 import {
   GET_SHOWTIME,
-  GET_SEAT,
   SHOWTIME_LOADING,
   SEAT_LOADING,
   CLEAR_CURRENT_ROUND,
@@ -9,7 +8,6 @@ import {
 
 const initialState = {
   cinema: null,
-  seat: null,
   loading: false
 };
 
@@ -29,12 +27,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         cinema: action.payload,
-        loading: false
-      };
-    case GET_SEAT:
-      return {
-        ...state,
-        seat: action.payload,
         loading: false
       };
     case CLEAR_CURRENT_ROUND:

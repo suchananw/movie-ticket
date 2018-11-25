@@ -64,6 +64,7 @@
   background: #dddddd;
   text-indent: -9999px;
   overflow: hidden;
+  position: inherit;
 }
 .seat input[type="checkbox"]:disabled + label:after {
   content: "X";

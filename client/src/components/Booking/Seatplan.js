@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getSeat } from "../../actions/bookingActions";
+import { Link } from "react-router-dom";
 
 import "./Seatplan.css";
 
@@ -9,6 +9,7 @@ class Seatplan extends Component {
   constructor() {
     super();
     this.state = {
+      timeIndex: null,
       "1": true,
       "2": true,
       "3": true,
@@ -54,8 +55,18 @@ class Seatplan extends Component {
 
   componentDidMount = () => {
     if (this.props.cinema.cinema) {
-      console.log("set initial seat status");
-      this.setInitialSeatStatus(this.props.cinema.cinema.seats);
+      this.setState({ timeIndex: this.props.timeIndex }, () => {
+        this.setInitialSeatStatus(this.state.timeIndex);
+      });
+    }
+  };
+
+  componentWillReceiveProps = nextprops => {
+    console.log(this.props.timeIndex, " -> ", nextprops.timeIndex);
+    if (nextprops.timeIndex !== this.props.timeIndex) {
+      this.setState({ timeIndex: nextprops.timeIndex }, () => {
+        this.setInitialSeatStatus(this.state.timeIndex);
+      });
     }
   };
 
@@ -79,15 +90,21 @@ class Seatplan extends Component {
   // Seat Status in database
   // True === Available
   // False === Booked
-  setInitialSeatStatus = seats => {
-    console.log(this.props.timeIndex);
-    console.log(seats);
-    seats.map(seat => {
-      console.log(seat);
-      this.setState({
-        [seat.seatNumber]: seat.status[this.props.timeIndex - 1]
+  setInitialSeatStatus = index => {
+    if (this.props.cinema.cinema) {
+      const seats = this.props.cinema.cinema.seats;
+      seats.map(seat => {
+        if (seat.status[index]) {
+          this.setState({
+            [seat.seatNumber]: seat.status[index]
+          });
+        } else {
+          this.setState({
+            [seat.seatNumber]: "disabled"
+          });
+        }
       });
-    });
+    }
   };
 
   genSeat = seats => {
@@ -109,15 +126,32 @@ class Seatplan extends Component {
   genSeatRow = row => {
     return row.map(seat => {
       let seatNumber = seat.seatNumber;
-      return (
-        <td className="seat">
+      const status = this.state[seatNumber];
+      let input = [];
+      if (status === "disabled") {
+        input.push(
           <input
             name={seatNumber}
             type="checkbox"
             id={seatNumber}
-            checked={!this.state[seatNumber]}
+            disabled="disabled"
             onChange={this.handleSeatChange}
           />
+        );
+      } else {
+        input.push(
+          <input
+            name={seatNumber}
+            type="checkbox"
+            id={seatNumber}
+            checked={!status}
+            onChange={this.handleSeatChange}
+          />
+        );
+      }
+      return (
+        <td className="seat">
+          {input}
           <label for={seatNumber}>{seatNumber}</label>
         </td>
       );
@@ -126,36 +160,45 @@ class Seatplan extends Component {
 
   render() {
     const { cinema } = this.props.cinema;
-    console.log(this.props);
     const seats = cinema.seats;
 
     return (
-      <div className="container seatplan p-4">
-        <table class="fuselage">
-          <thead colspan="2">
-            <th colspan="2">
-              <td className="screen-row p-3 ">
-                <span className="screen-pointer">SCREEN</span>
-              </td>
-            </th>
-          </thead>
-          <tbody>{this.genSeat(seats)}</tbody>
-        </table>
+      <div>
+        <div className="container seatplan p-4">
+          <table class="fuselage">
+            <thead colspan="2">
+              <th colspan="2">
+                <td className="screen-row p-3 ">
+                  <span className="screen-pointer">SCREEN</span>
+                </td>
+              </th>
+            </thead>
+            <tbody>{this.genSeat(seats)}</tbody>
+          </table>
+        </div>
+        <Link
+          to={{
+            pathname: `/booking/${this.props.movies.movie.name}/confirm`,
+            state: this.state
+          }}
+        >
+          <input className="m-4" type="button" value="Next" />
+        </Link>
       </div>
     );
   }
 }
 
 Seatplan.propTypes = {
-  getSeat: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  movies: PropTypes.object.isRequired,
   cinema: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
+  auth: state.auth,
+  movies: state.movies,
   cinema: state.cinema
 });
 
-export default connect(
-  mapStateToProps,
-  { getSeat }
-)(Seatplan);
+export default connect(mapStateToProps)(Seatplan);

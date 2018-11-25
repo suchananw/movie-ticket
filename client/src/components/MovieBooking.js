@@ -41,7 +41,6 @@ class MovieBooking extends Component {
         </div>
       );
     } else {
-      console.log(this.props);
       return (
         <div className="container">
           <div>
@@ -50,7 +49,6 @@ class MovieBooking extends Component {
           {this.state.time !== null ? (
             <div>
               <Seatplan timeIndex={this.state.time} />
-              <input type="button" value="Next" />
             </div>
           ) : null}
         </div>
