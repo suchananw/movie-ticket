@@ -22,7 +22,7 @@ class Home extends Component {
         <Card movie={movie} />
       ));
       content["coming"] = movieList.comingsoon.map(movie => (
-        <Card movie={movie} />
+        <Card movie={movie} status="coming" />
       ));
     }
 

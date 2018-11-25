@@ -69,22 +69,24 @@ router.post("/login", (req, res) => {
   // Find user by email
   User.findOne({ email }).then(user => {
     // Check for user
-    console.log(user)
-    // if (!user) {
-    //   errors.email = "User not found";
-    //   return res.status(404).json(errors);
-    // }
+    console.log(user);
+    if (!user) {
+      errors.email = "User not found";
+      return res.status(404).json(errors);
+    }
 
     // Check Password
     bcrypt.compare(password, user.password, function(err, result) {
-      if (err) { throw (err); }
+      if (err) {
+        throw err;
+      }
       // console.log(result);
-      if(result){
-        console.log("isMatch")
+      if (result) {
+        console.log("isMatch");
         // User Matched
         const payload = {
-          id: user.id,
-          name: user.name,
+          id: user._id,
+          email: user.email,
           birthdate: user.birthdate
         }; // Create JWT Payload
 
@@ -100,12 +102,11 @@ router.post("/login", (req, res) => {
             });
           }
         );
-      }
-      else {
+      } else {
         // console.log("password doesn't match any account")
-        res.json({msg:'fail'});
+        res.json({ msg: "fail" });
       }
-      })
+    });
   });
 });
 

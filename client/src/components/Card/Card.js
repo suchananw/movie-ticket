@@ -6,6 +6,11 @@ export default class Card extends Component {
   render() {
     const { movie } = this.props;
     const movieID = movie._id;
+    let status = null;
+    if (this.props.status) {
+      status = this.props.status;
+    }
+
     return (
       <div class="col-sm-4">
         <Link
@@ -25,14 +30,16 @@ export default class Card extends Component {
         >
           <input className="p-2" type="button" value="Detail" />
         </Link>
-        <Link
-          to={{
-            pathname: `/booking/${movie.name}`,
-            state: { movie: movie }
-          }}
-        >
-          <input className="p-2" type="button" value="Buy Ticket" />
-        </Link>
+        {status === null ? (
+          <Link
+            to={{
+              pathname: `/booking/${movie.name}`,
+              state: { movie: movie }
+            }}
+          >
+            <input className="p-2" type="button" value="Buy Ticket" />
+          </Link>
+        ) : null}
       </div>
     );
   }

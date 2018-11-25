@@ -11,10 +11,11 @@ class SignUp extends Component {
   constructor() {
     super();
     this.state = {
+      name: "",
       email: "",
       password: "",
       password2: "",
-      birthday: moment(),
+      birthdate: moment(),
       tel: "",
       errors: {}
     };
@@ -31,17 +32,18 @@ class SignUp extends Component {
   };
 
   onDateChange = event => {
-    this.setState({ birthday: event });
+    this.setState({ birthdate: event });
   };
 
   onSubmit = event => {
     event.preventDefault();
 
     const newUser = {
+      name: this.state.name,
       email: this.state.email,
       password: this.state.password,
       password2: this.state.password2,
-      birthday: this.state.birthday,
+      birthdate: this.state.birthdate,
       tel: this.state.tel
     };
 
@@ -54,6 +56,14 @@ class SignUp extends Component {
       <div className="signup">
         <div className="container">
           <form onSubmit={this.onSubmit}>
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={this.state.name}
+              onChange={this.onChange}
+              required
+            />
             <input
               type="email"
               name="email"
@@ -93,7 +103,7 @@ class SignUp extends Component {
                 dateFormat="DD/MM/YYYY"
                 maxDate={moment()}
                 onChange={this.onDateChange}
-                selected={this.state.birthday}
+                selected={this.state.birthdate}
               />
             </div>
             <input type="submit" value="Sign Up" />

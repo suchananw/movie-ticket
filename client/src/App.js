@@ -52,19 +52,23 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
             </Switch>
             <Switch>
-              <Route exact path="/movie/:name" component={MovieDetail} />
+              <PrivateRoute exact path="/movie/:name" component={MovieDetail} />
             </Switch>
             <Switch>
-              <Route exact path="/history" component={History} />
+              <PrivateRoute exact path="/history" component={History} />
             </Switch>
             <Switch>
-              <Route exact path="/payment" component={Payment} />
+              <PrivateRoute exact path="/payment" component={Payment} />
             </Switch>
             <Switch>
-              <Route exact path="/booking/:name" component={MovieBooking} />
+              <PrivateRoute
+                exact
+                path="/booking/:name"
+                component={MovieBooking}
+              />
             </Switch>
             <Switch>
-              <Route
+              <PrivateRoute
                 exact
                 path="/booking/:name/confirm"
                 component={BookingConfirm}
