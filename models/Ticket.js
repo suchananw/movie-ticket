@@ -19,8 +19,8 @@ const TicketSchema = new Schema({
     type: Number,
     required: true
   },
-  paid: {
-    type: Boolean,
+  status: {
+    type: String,
     required: true
   },
   showTime: {
