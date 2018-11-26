@@ -20,8 +20,7 @@ class ProductRow extends Component {
     const bookingTime = new Date(ticket.bookingTime);
     const expired = moment(bookingTime)
       .add(30, "m")
-      .toDate();
-    const expiredTime = expired.getHours() + ":" + expired.getMinutes();
+      .format("LT");
 
     let paymentButton = [];
     if (ticket.status == "waiting") {
@@ -38,7 +37,7 @@ class ProductRow extends Component {
       cinema: ticket.cinema,
       showtime: ticket.showTime,
       price: ticket.amount,
-      expried: expiredTime,
+      expried: expired,
       status: ticket.status
     };
     let statusStyle = "";

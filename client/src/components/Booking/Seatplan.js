@@ -152,7 +152,9 @@ class Seatplan extends Component {
       return (
         <td className="seat">
           {input}
-          <label for={seatNumber}>{seatNumber}</label>
+          <label for={seatNumber}>
+            {Number(seatNumber) % 8 === 0 ? "8" : Number(seatNumber) % 8}
+          </label>
         </td>
       );
     });
