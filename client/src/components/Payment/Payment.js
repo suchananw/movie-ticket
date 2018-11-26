@@ -47,6 +47,15 @@ class Payment extends Component {
               <thead>
                 <tr>
                   <th scope="col">
+                    <Link
+                      to={{
+                        pathname: "/history"
+                      }}
+                    >
+                      <button type="button" class="btn btn-secondary mx-3">
+                        Back
+                      </button>
+                    </Link>
                     <button
                       type="button"
                       class="btn btn-primary"
