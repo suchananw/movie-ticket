@@ -12,10 +12,15 @@ class ProductRow extends Component {
     const { ticket, index } = this.props;
     let seatList = "";
     ticket.seat.map((seatNumber, index) => {
+      const rowLabel = 65;
+      const seatRow = Number(seatNumber) / 8;
+      const seatIndex =
+        Number(seatNumber) % 8 === 0 ? "8" : Number(seatNumber) % 8;
       if (index === ticket.seat.length - 1) {
-        return (seatList += seatNumber);
+        return (seatList +=
+          String.fromCharCode(rowLabel + seatRow) + seatIndex);
       }
-      seatList += seatNumber + ", ";
+      seatList += String.fromCharCode(rowLabel + seatRow) + seatIndex + ", ";
     });
     const bookingTime = new Date(ticket.bookingTime);
     const expired = moment(bookingTime)
@@ -23,7 +28,7 @@ class ProductRow extends Component {
       .format("LT");
 
     let paymentButton = [];
-    if (ticket.status == "waiting") {
+    if (ticket.status === "waiting") {
       paymentButton.push(
         <button type="button" class="btn btn-info">
           Payment
@@ -41,9 +46,9 @@ class ProductRow extends Component {
       status: ticket.status
     };
     let statusStyle = "";
-    if (ticket.status == "paid") {
+    if (ticket.status === "paid") {
       statusStyle = "text-success";
-    } else if (ticket.status == "expired") {
+    } else if (ticket.status === "expired") {
       statusStyle = "text-danger";
     }
 
@@ -54,7 +59,7 @@ class ProductRow extends Component {
         <td>{data.cinema}</td>
         <td>{data.seat}</td>
         <td>{data.showtime}</td>
-        <td>{data.price} baht</td>
+        <td>{data.price} Baht</td>
         <td>{data.expried}</td>
         <td className={`text-uppercase font-weight-bold ${statusStyle}`}>
           {data.status}

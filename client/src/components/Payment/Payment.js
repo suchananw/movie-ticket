@@ -18,11 +18,7 @@ class Payment extends Component {
       <div class="container p-3">
         <div class="row">
           <div class="col-md-6 img p-3">
-            <img
-              src="https://api.qrserver.com/v1/create-qr-code/?data=billbill&amp;size=350x350"
-              alt=""
-              title=""
-            />
+            <img src={require("../Payment/qrcode.png")} alt="qrcode" title="" />
             <br />
             <h4 className="font-weight-bold">Status : {data.status} </h4>
           </div>

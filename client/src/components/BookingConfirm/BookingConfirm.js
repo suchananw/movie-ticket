@@ -89,10 +89,14 @@ class BookingConfirm extends Component {
     } else {
       let seatList = "";
       this.state.seats.map((seat, index) => {
+        const rowLabel = 65;
+        const seatRow = Number(seat) / 8;
+        const seatIndex = Number(seat) % 8 === 0 ? "8" : Number(seat) % 8;
         if (index === this.state.seats.length - 1) {
-          return (seatList += seat);
+          return (seatList +=
+            String.fromCharCode(rowLabel + seatRow) + seatIndex);
         }
-        seatList += seat + ", ";
+        seatList += String.fromCharCode(rowLabel + seatRow) + seatIndex + ", ";
       });
 
       return (
