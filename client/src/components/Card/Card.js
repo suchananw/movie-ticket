@@ -16,7 +16,7 @@ export default class Card extends Component {
         <Link
           to={{
             pathname: `/movie/${movie.name}`,
-            state: { movieID: movieID }
+            state: { movieID: movieID, status: status }
           }}
         >
           <img class="item img-thumbnail" src={movie.poster} alt={movie.name} />

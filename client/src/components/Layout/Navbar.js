@@ -17,7 +17,11 @@ class Navbar extends Component {
       <div>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
           <p className="navbar-brand">
-            <a className="nav-link" href="/">
+            <a
+              className="nav-link"
+              href="/"
+              style={{ color: "#ffffff", "text-decoration": "none" }}
+            >
               Young&Rich
             </a>
           </p>
@@ -63,7 +67,7 @@ class Navbar extends Component {
                 </ul>
               ) : (
                 <Link className="nav-link" to="/login">
-                  Login/Register
+                  Signin/Signup
                 </Link>
               )}
             </ul>
