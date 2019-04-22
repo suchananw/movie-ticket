@@ -27,6 +27,7 @@ class MovieDetail extends Component {
           return (genreList += genre);
         }
         genreList += genre + ", ";
+        return genreList;
       });
 
       return (

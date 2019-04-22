@@ -10,12 +10,11 @@ export default class Showtime extends Component {
     const currenttime = new Date().getHours();
     const { cinema } = this.props;
     const timetable = cinema.timeTable;
-    const timeButton = [];
-    timetable.map((time, index) => {
+    const timeButton = timetable.map((time, index) => {
       const showtime = new Date();
       showtime.setHours(Number(time.slice(0, 2)));
       if (showtime.getHours() < currenttime) {
-        timeButton.push(
+        return(
           <input
             className="showtime-button p-3 m-2 showtime-disabled"
             key={index}
@@ -25,7 +24,7 @@ export default class Showtime extends Component {
           />
         );
       } else {
-        timeButton.push(
+        return(
           <input
             className="showtime-button p-3 m-2"
             key={index}

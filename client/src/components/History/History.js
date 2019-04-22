@@ -21,6 +21,7 @@ class ProductRow extends Component {
           String.fromCharCode(rowLabel + seatRow) + seatIndex);
       }
       seatList += String.fromCharCode(rowLabel + seatRow) + seatIndex + ", ";
+      return seatList;
     });
     const bookingTime = new Date(ticket.bookingTime);
     const expired = moment(bookingTime)

@@ -97,6 +97,7 @@ class BookingConfirm extends Component {
             String.fromCharCode(rowLabel + seatRow) + seatIndex);
         }
         seatList += String.fromCharCode(rowLabel + seatRow) + seatIndex + ", ";
+        return seatList;
       });
 
       return (
