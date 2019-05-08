@@ -26,8 +26,8 @@
     "eject": "react-scripts eject",
     "client": "npm start --prefix client",
     "client-install": "npm install --prefix client",
-    "server": "nodemon server.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install": "concurrently \"npm install\" \"npm install --prefix client\""
   },
   "eslintConfig": {
     "extends": "react-app"
