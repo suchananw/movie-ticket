@@ -103,6 +103,7 @@ class Seatplan extends Component {
             [seat.seatNumber]: "disabled"
           });
         }
+        return seat;
       });
     }
   };
